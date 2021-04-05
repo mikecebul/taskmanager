@@ -1,9 +1,0 @@
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\bin\Debug\netcoreapp3.1\TaskManager.Models.deps.json
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\bin\Debug\netcoreapp3.1\TaskManager.Models.dll
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\bin\Debug\netcoreapp3.1\TaskManager.Models.pdb
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\obj\Debug\netcoreapp3.1\TaskManager.Models.csprojAssemblyReference.cache
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\obj\Debug\netcoreapp3.1\TaskManager.Models.AssemblyInfoInputs.cache
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\obj\Debug\netcoreapp3.1\TaskManager.Models.AssemblyInfo.cs
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\obj\Debug\netcoreapp3.1\TaskManager.Models.csproj.CoreCompileInputs.cache
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\obj\Debug\netcoreapp3.1\TaskManager.Models.dll
-C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Models\obj\Debug\netcoreapp3.1\TaskManager.Models.pdb

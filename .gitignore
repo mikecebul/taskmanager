@@ -1,0 +1,13 @@
+﻿.vs
+TaskManager.Api/bin
+TaskManager.Api/obj
+TaskManager.Data/bin
+TaskManager.Data/obj
+TaskManager.Models/bin
+TaskManager.Models/obj
+TaskManager.Web/obj
+TaskManager.Services/bin
+TaskManager.Services/obj
+TaskManager.Tests/bin
+TaskManager.Tests/obj
+TaskManager.Web/bin
