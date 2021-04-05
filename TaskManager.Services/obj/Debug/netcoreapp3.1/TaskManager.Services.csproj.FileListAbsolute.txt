@@ -1,0 +1,28 @@
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Services.deps.json
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Services.dll
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Services.pdb
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Common.dll
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Data.dll
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Data.pdb
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Common.pdb
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.csprojAssemblyReference.cache
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.AssemblyInfoInputs.cache
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.AssemblyInfo.cs
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.csproj.CoreCompileInputs.cache
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.csproj.CopyComplete
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.dll
+C:\Workspaces\Personal\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.pdb
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Services.deps.json
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Services.dll
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Services.pdb
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Common.dll
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Data.dll
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Data.pdb
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\bin\Debug\netcoreapp3.1\TaskManager.Common.pdb
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.csprojAssemblyReference.cache
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.AssemblyInfoInputs.cache
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.AssemblyInfo.cs
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.csproj.CoreCompileInputs.cache
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.csproj.CopyComplete
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.dll
+C:\Users\Jake Donese\Downloads\task-manager\task-manager\TaskManager\TaskManager.Services\obj\Debug\netcoreapp3.1\TaskManager.Services.pdb
