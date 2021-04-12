@@ -24,7 +24,7 @@ TaskManager.Web is a simple, unstyled MVC website with all of the domain models,
 
 # Required Technologies #
 
-* A windows or Mac computer.
+* A Windows or Mac computer.
 * Visual Studio Community Edition (latest version). Note there are missing components on the Mac that you will have to self install (NuGet CLI) to run the API project while running the website.
 
 ### What is this repository for? ###
@@ -43,7 +43,7 @@ Once you have a running project that works as intended, you will be asked to mak
 * Only AWH staff should be push changes to this repo
 
 # New Features #
-* Style the existing MVC website to match these designs: [Mobile Responsive Website Designs](https://projects.invisionapp.com/d/main#/projects/prototypes/21209237).
+* Style the existing MVC website to match these designs: [Responsive Website Designs](https://projects.invisionapp.com/d/main#/projects/prototypes/21209237).
 * Alternatively, you may choose to add a new front end using a Javascript framework like React.js, Angular.js, Svelte.js or similar.
 * Alternatively, you may choose to build a mobile app for the front end using Xamarin or React Native. With that option, use these designs: [Android App Designs](https://projects.invisionapp.com/d/main#/projects/prototypes/21186629) and [iOS App Designs](https://projects.invisionapp.com/d/main#/projects/prototypes/21203858).
 * Add a new property called Status to the ToDo object with the following possible values: "To Do", "In Progress" and "Done".
