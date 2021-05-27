@@ -43,9 +43,9 @@ Once you have a running project that works as intended, you will be asked to mak
 * Only AWH staff should be push changes to this repo
 
 # New Features #
-* Style the existing MVC website to match these designs: [Responsive Website Designs](https://projects.invisionapp.com/d/main#/projects/prototypes/21209237).
+* Style the existing MVC website to match these designs: [Responsive Website Designs](https://invis.io/K410P944SEJU).
 * Alternatively, you may choose to add a new front end using a Javascript framework like React.js, Angular.js, Svelte.js or similar.
-* Alternatively, you may choose to build a mobile app for the front end using Xamarin or React Native. With that option, use these designs: [Android App Designs](https://projects.invisionapp.com/d/main#/projects/prototypes/21186629) and [iOS App Designs](https://projects.invisionapp.com/d/main#/projects/prototypes/21203858).
+* Alternatively, you may choose to build a mobile app for the front end using Xamarin or React Native. With that option, use these designs: [Android App Designs](https://invis.io/2710P91SYN6X) and [iOS App Designs](https://invis.io/J610P94TM8YN).
 * Add a new property called Status to the ToDo object with the following possible values: "To Do", "In Progress" and "Done".
 * There should be an indicator for upcoming (yellow) and past due (red) ToDos.
 * You are encouraged to make other additions and modifications as desired.
