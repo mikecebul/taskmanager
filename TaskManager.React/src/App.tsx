@@ -42,7 +42,7 @@ function Nav() {
 
 function Todos() {
   const { isLoading, error, data } = useQuery("todos", () =>
-    fetch("https://localhost:44318/api/ToDos").then((res) => res.json())
+    fetch("https://localhost:5001/api/ToDos").then((res) => res.json())
   );
 
   if (isLoading) return <div className="flex-1 px-4 pt-6">"Loading..."</div>;
