@@ -22,6 +22,7 @@ Follow these steps to get the project running on your local machine:
    - Navigate to the API project directory in your terminal and run the following command to start the API:
 
      ```
+     cd TaskManager.API
      dotnet run
      ```
 
@@ -29,11 +30,20 @@ Follow these steps to get the project running on your local machine:
 
 2. **Install dependencies**
 
-   Navigate to the React project directory in your terminal and run the following command to install the project's dependencies:
+In a new terminal navigate to the React project directory and run the following command to install the project's dependencies:
+
+```
+ cd /TaskManager.React
+ yarn
+```
 
 3. **Start the React application**
 
 Still in the React project directory, run the following command to start the React application:
+
+```
+  yarn dev
+```
 
 This command starts the Vite dev server. You should now be able to access the React application at `http://localhost:3000/`.
 
