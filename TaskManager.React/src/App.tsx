@@ -63,7 +63,7 @@ function Todos() {
         </button>
         <p className="pl-2 text-lg font-semibold">Create</p>
       </div>
-      <div>
+      <div className="pt-4 text-lg font-semibold">
         <ul>
           {data.map((todo: Todo) => (
             <li key={todo.id}>{todo.title}</li>
