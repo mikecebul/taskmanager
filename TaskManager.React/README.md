@@ -26,7 +26,7 @@ Follow these steps to get the project running on your local machine:
    dotnet run
    ```
 
-The API should now be running at `https://localhost:5001/` or `http://localhost:5000/`.
+   The API should now be running at `https://localhost:5001/` or `http://localhost:5000/`.
 
 2. **Install dependencies**
 
