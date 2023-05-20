@@ -31,6 +31,17 @@ namespace TaskManager.Api
             });
 
             services.AddScoped<IToDoService, ToDoService>();
+
+            services.AddCors(options =>
+            {
+                options.AddPolicy(name: "AllowSpecificOrigin",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://127.0.0.1:5173")
+                            .AllowAnyHeader()
+                            .AllowAnyMethod();
+                    });
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -42,6 +53,8 @@ namespace TaskManager.Api
             {
                 app.UseDeveloperExceptionPage();
             }
+
+            app.UseCors("AllowSpecificOrigin");
 
             app.UseHttpsRedirection();
 
