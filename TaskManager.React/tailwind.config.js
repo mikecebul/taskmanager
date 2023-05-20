@@ -8,7 +8,7 @@ export default {
         "darker-teal": "#00ab99",
         yellow: "#ffc700",
         blue: "#46bcff",
-        "dark-blue": "#2c99d7",
+        "darker-blue": "#2c99d7",
         red: "#ff6464",
         "dark-red": "#c82323",
         black: "#000000",
