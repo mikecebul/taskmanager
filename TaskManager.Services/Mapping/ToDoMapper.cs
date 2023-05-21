@@ -12,7 +12,7 @@ namespace TaskManager.Services.Mapping
                 Description = domain.Description,
                 DueDate = domain.DueDate,
                 Notes = domain.Notes,
-                Status = (Common.Contracts.ToDo.Status)(int)domain.Status
+                Started = domain.Started
             }
             : null;
 
@@ -22,7 +22,7 @@ namespace TaskManager.Services.Mapping
             Description = dto.Description,
             DueDate = dto.DueDate,
             Notes = dto.Notes,
-            Status = (Data.Models.Status)(int)dto.Status
+            Started = dto.Started
         };
     }
 }

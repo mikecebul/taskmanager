@@ -5,13 +5,12 @@ import { QueryClient, useQuery, QueryClientProvider } from "react-query";
 import {
   Table,
   TableBody,
-  TableCaption,
+  // TableCaption,
   TableCell,
-  TableHead,
-  TableHeader,
+  // TableHead,
+  // TableHeader,
   TableRow,
 } from "@/components/ui/table";
-import React from "react";
 
 const queryClient = new QueryClient();
 
@@ -21,6 +20,8 @@ type Todo = {
   description: string;
   duedate: string;
   notes: string;
+  started: boolean;
+  completed: boolean;
 };
 
 type ToDoTableProps = {
@@ -60,6 +61,7 @@ function Todos() {
   const { isLoading, error, data } = useQuery("todos", () =>
     fetch("https://localhost:5001/api/ToDos").then((res) => res.json())
   );
+
   if (isLoading) return <div className="flex-1 px-4 pt-6">"Loading..."</div>;
   if (error instanceof Error)
     return (
@@ -98,6 +100,16 @@ function ToDoTable({ todos }: ToDoTableProps) {
       return "bg-teal";
     }
   };
+
+  const getStatus = (started: boolean, completed: boolean): string => {
+    if (completed) {
+      return "Done";
+    } else if (started) {
+      return "In Progress";
+    } else {
+      return "To Do";
+    }
+  };
   return (
     <div className="rounded-md border border-white px-1 shadow-lg">
       <Table>
@@ -109,7 +121,7 @@ function ToDoTable({ todos }: ToDoTableProps) {
                 <div className="border-r-[1px] border-lighter-gray pr-3">
                   <div className="flex items-center justify-between space-x-1 rounded-full border-2 border-medium-gray px-2 py-1 font-medium">
                     <p className="text-xs font-semibold tracking-wide text-medium-gray">
-                      To Do
+                      {getStatus(todo.started, todo.completed)}
                     </p>
                     <ChevronDown
                       size={16}

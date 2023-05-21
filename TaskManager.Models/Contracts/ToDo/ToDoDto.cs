@@ -26,7 +26,10 @@ namespace TaskManager.Common.Contracts.ToDo
         [JsonPropertyName("notes")]
         public string Notes { get; set; }
 
-        [JsonPropertyName("status")]
-        public Status Status { get; set; }
+        [JsonPropertyName("started")]
+        public bool Started { get; set; }
+
+        [JsonPropertyName("completed")]
+        public bool Completed { get; set; }
   }
 }
