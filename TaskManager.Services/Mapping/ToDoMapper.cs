@@ -11,7 +11,8 @@ namespace TaskManager.Services.Mapping
                 Title = domain.Title,
                 Description = domain.Description,
                 DueDate = domain.DueDate,
-                Notes = domain.Notes
+                Notes = domain.Notes,
+                Status = (Common.Contracts.ToDo.Status)(int)domain.Status
             }
             : null;
 
@@ -20,7 +21,8 @@ namespace TaskManager.Services.Mapping
             Title = dto.Title,
             Description = dto.Description,
             DueDate = dto.DueDate,
-            Notes = dto.Notes
+            Notes = dto.Notes,
+            Status = (Data.Models.Status)(int)dto.Status
         };
     }
 }

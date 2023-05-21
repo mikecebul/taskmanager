@@ -3,7 +3,13 @@ using System.Text.Json.Serialization;
 
 namespace TaskManager.Common.Contracts.ToDo
 {
-    public class ToDoDto
+  public enum Status
+  {
+    none,
+    started,
+    done
+  }
+  public class ToDoDto
     {
         [JsonPropertyName("id")]
         public int Id { get; set; }
@@ -19,5 +25,8 @@ namespace TaskManager.Common.Contracts.ToDo
 
         [JsonPropertyName("notes")]
         public string Notes { get; set; }
-    }
+
+        [JsonPropertyName("status")]
+        public Status Status { get; set; }
+  }
 }
