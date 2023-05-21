@@ -11,10 +11,24 @@ import {
   // TableHeader,
   TableRow,
 } from "@/components/ui/table";
+// Select Imports
+import {
+  Select,
+  SelectContent,
+  SelectGroup,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+  SelectIcon,
+} from "@/components/ui/select";
 
 const queryClient = new QueryClient();
 
 type Status = "To Do" | "In Progress" | "Done";
+
+type ProgressSelectProps = {
+  status: Status;
+};
 
 type Todo = {
   id: number;
@@ -34,7 +48,7 @@ type ToDoTableProps = {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
+      <div className="flex flex-col min-h-screen">
         <Nav />
         <Todos />
         <Footer />
@@ -74,6 +88,7 @@ function Todos() {
       return "To Do";
     }
   };
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const todos = data?.map((todo: any) => ({
     ...todo,
     status: getStatus(todo.started, todo.completed),
@@ -118,38 +133,19 @@ function ToDoTable({ todos }: ToDoTableProps) {
     }
   };
 
-  const getTableCellClass = (status: Status) => {
-    let borderClass = "border-medium-gray";
-    let textClass = "text-medium-gray";
-    let chevronClass = "stroke-medium-gray";
-    let bgClass = "bg-none";
-
-    if (status === "Done") {
-      borderClass = "border-teal";
-      textClass = "text-lighter-gray";
-      chevronClass = "stroke-lighter-gray";
-      bgClass = "bg-teal";
-    } else if (status === "In Progress") {
-      borderClass = "border-blue";
-      textClass = "text-blue";
-      chevronClass = "stroke-blue";
-      bgClass = "bg-none";
-    }
-
-    return { borderClass, textClass, chevronClass, bgClass };
-  };
-
   return (
-    <div className="rounded-md border border-white px-1 shadow-lg">
+    <div className="border border-white rounded-md shadow-lg">
       <Table>
         {/* <TableCaption>A list of your ToDo's.</TableCaption> */}
-        <TableBody className="">
+        <TableBody>
           {todos.map((todo) => {
-            const classes = getTableCellClass(todo.status);
+            // const classes = getTableCellClass(todo.status);
             return (
               <TableRow key={todo.id}>
                 <TableCell className="w-32 p-0">
-                  <div className="border-r-[1px] border-lighter-gray pr-3">
+                  <div className="border-r-[1px] border-lighter-gray px-2">
+                    <ProgressSelect status={todo.status}></ProgressSelect>
+                    {/* <div className="border-r-[1px] border-lighter-gray pr-3">
                     <div
                       className={`flex items-center justify-between space-x-1 rounded-full border-2 px-2 py-1 font-medium ${classes.borderClass} ${classes.bgClass}`}
                     >
@@ -163,13 +159,14 @@ function ToDoTable({ todos }: ToDoTableProps) {
                         className={`stroke-[3px] ${classes.chevronClass}`}
                       />
                     </div>
+                  </div> */}
                   </div>
                 </TableCell>
                 <TableCell className="px-3 py-4 text-base font-semibold text-darker-gray">
-                  <p className="w-36 overflow-hidden truncate">{todo.title}</p>
+                  <p className="overflow-hidden truncate w-36">{todo.title}</p>
                 </TableCell>
                 <TableCell className="p-2">
-                  <div className="flex min-w-full items-center justify-end">
+                  <div className="flex items-center justify-end min-w-full">
                     <div
                       className={`mr-1 h-3 w-3 rounded-full ${getDueDateColorClass(
                         todo.duedate
@@ -192,9 +189,46 @@ function ToDoTable({ todos }: ToDoTableProps) {
 
 function Footer() {
   return (
-    <footer className="flex justify-end bg-near-black px-2 py-4">
+    <footer className="flex justify-end px-2 py-4 bg-near-black">
       <p className="text-xs text-medium-gray">Privacy Policy</p>
     </footer>
+  );
+}
+
+function ProgressSelect({ status }: ProgressSelectProps) {
+  const getTableCellClass = (status: Status) => {
+    let trigger =
+      "border-medium-gray text-medium-gray bg-none focus:ring-medium-gray";
+    let triggerIcon = "stroke-medium-gray";
+
+    if (status === "Done") {
+      trigger = "border-teal text-lighter-gray bg-teal focus:ring-teal";
+      triggerIcon = "stroke-lighter-gray";
+    } else if (status === "In Progress") {
+      trigger = "border-blue text-blue bg-none focus:ring-blue";
+      triggerIcon = "stroke-blue";
+    }
+
+    return { trigger, triggerIcon };
+  };
+  const classes = getTableCellClass(status);
+  return (
+    <Select>
+      <SelectTrigger
+        className={`w-28 ${classes.trigger}`}
+        iconClassName={classes.triggerIcon}
+      >
+        <SelectValue placeholder={status} />
+      </SelectTrigger>
+      <SelectContent>
+        <SelectGroup>
+          {/* <SelectLabel>Fruits</SelectLabel> */}
+          <SelectItem value="To Do">To Do</SelectItem>
+          <SelectItem value="In Progress">In Progress</SelectItem>
+          <SelectItem value="Done">Done</SelectItem>
+        </SelectGroup>
+      </SelectContent>
+    </Select>
   );
 }
 
