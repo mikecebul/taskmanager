@@ -14,6 +14,8 @@ import {
 
 const queryClient = new QueryClient();
 
+type Status = "To Do" | "In Progress" | "Done";
+
 type Todo = {
   id: number;
   title: string;
@@ -22,6 +24,7 @@ type Todo = {
   notes: string;
   started: boolean;
   completed: boolean;
+  status: Status;
 };
 
 type ToDoTableProps = {
@@ -62,6 +65,20 @@ function Todos() {
     fetch("https://localhost:5001/api/ToDos").then((res) => res.json())
   );
 
+  const getStatus = (started: boolean, completed: boolean): Status => {
+    if (completed) {
+      return "Done";
+    } else if (started) {
+      return "In Progress";
+    } else {
+      return "To Do";
+    }
+  };
+  const todos = data?.map((todo: any) => ({
+    ...todo,
+    status: getStatus(todo.started, todo.completed),
+  }));
+
   if (isLoading) return <div className="flex-1 px-4 pt-6">"Loading..."</div>;
   if (error instanceof Error)
     return (
@@ -79,14 +96,14 @@ function Todos() {
         <p className="pl-2 text-lg font-semibold">Create</p>
       </div>
       <div className="pt-12 text-lg font-semibold">
-        <ToDoTable todos={data} />
+        <ToDoTable todos={todos || []} />
       </div>
     </main>
   );
 }
 
 function ToDoTable({ todos }: ToDoTableProps) {
-  const getColorClass = (dueDate: string) => {
+  const getDueDateColorClass = (dueDate: string) => {
     const now = Date.now();
     const due = new Date(dueDate).getTime();
     console.log("Due: ", due);
@@ -101,53 +118,72 @@ function ToDoTable({ todos }: ToDoTableProps) {
     }
   };
 
-  const getStatus = (started: boolean, completed: boolean): string => {
-    if (completed) {
-      return "Done";
-    } else if (started) {
-      return "In Progress";
-    } else {
-      return "To Do";
+  const getTableCellClass = (status: Status) => {
+    let borderClass = "border-medium-gray";
+    let textClass = "text-medium-gray";
+    let chevronClass = "stroke-medium-gray";
+    let bgClass = "bg-none";
+
+    if (status === "Done") {
+      borderClass = "border-teal";
+      textClass = "text-teal";
+      chevronClass = "stroke-teal";
+      bgClass = "bg-teal";
+    } else if (status === "In Progress") {
+      borderClass = "border-blue";
+      textClass = "text-blue";
+      chevronClass = "stroke-blue";
+      bgClass = "bg-none";
     }
+
+    return { borderClass, textClass, chevronClass, bgClass };
   };
+
   return (
     <div className="rounded-md border border-white px-1 shadow-lg">
       <Table>
         {/* <TableCaption>A list of your ToDo's.</TableCaption> */}
         <TableBody className="">
-          {todos.map((todo) => (
-            <TableRow key={todo.id}>
-              <TableCell className="w-32 p-0">
-                <div className="border-r-[1px] border-lighter-gray pr-3">
-                  <div className="flex items-center justify-between space-x-1 rounded-full border-2 border-medium-gray px-2 py-1 font-medium">
-                    <p className="text-xs font-semibold tracking-wide text-medium-gray">
-                      {getStatus(todo.started, todo.completed)}
-                    </p>
-                    <ChevronDown
+          {todos.map((todo) => {
+            const classes = getTableCellClass(todo.status);
+            return (
+              <TableRow key={todo.id}>
+                <TableCell className="w-32 p-0">
+                  <div className="border-r-[1px] border-lighter-gray pr-3">
+                    <div
+                      className={`flex items-center justify-between space-x-1 rounded-full border-2 px-2 py-1 font-medium ${classes.borderClass} ${classes.bgClass}`}
+                    >
+                      <p
+                        className={`text-xs font-semibold tracking-wide ${classes.textClass}`}
+                      >
+                        {todo.status}
+                      </p>
+                      <ChevronDown
+                        size={16}
+                        className={`stroke-[3px] ${classes.chevronClass}`}
+                      />
+                    </div>
+                  </div>
+                </TableCell>
+                <TableCell className="px-3 py-4 text-base font-semibold text-darker-gray">
+                  <p className="w-36 overflow-hidden truncate">{todo.title}</p>
+                </TableCell>
+                <TableCell className="p-2">
+                  <div className="flex min-w-full items-center justify-end">
+                    <div
+                      className={`mr-1 h-3 w-3 rounded-full ${getDueDateColorClass(
+                        todo.duedate
+                      )}`}
+                    ></div>
+                    <ChevronRight
                       size={16}
-                      className="stroke-medium-gray stroke-[3px]"
+                      className="stroke-[3px] text-medium-gray"
                     />
                   </div>
-                </div>
-              </TableCell>
-              <TableCell className="px-3 py-4 text-base font-semibold text-darker-gray">
-                <p className="w-36 overflow-hidden truncate">{todo.title}</p>
-              </TableCell>
-              <TableCell className="p-2">
-                <div className="flex min-w-full items-center justify-end">
-                  <div
-                    className={`mr-1 h-3 w-3 rounded-full ${getColorClass(
-                      todo.duedate
-                    )}`}
-                  ></div>
-                  <ChevronRight
-                    size={16}
-                    className="stroke-[3px] text-medium-gray"
-                  />
-                </div>
-              </TableCell>
-            </TableRow>
-          ))}
+                </TableCell>
+              </TableRow>
+            );
+          })}
         </TableBody>
       </Table>
     </div>
