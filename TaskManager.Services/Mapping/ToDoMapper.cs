@@ -12,7 +12,8 @@ namespace TaskManager.Services.Mapping
                 Description = domain.Description,
                 DueDate = domain.DueDate,
                 Notes = domain.Notes,
-                Started = domain.Started
+                Started = domain.Started,
+                Completed = domain.Completed
             }
             : null;
 
@@ -22,7 +23,8 @@ namespace TaskManager.Services.Mapping
             Description = dto.Description,
             DueDate = dto.DueDate,
             Notes = dto.Notes,
-            Started = dto.Started
+            Started = dto.Started,
+            Completed = dto.Completed
         };
     }
 }
