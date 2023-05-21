@@ -126,8 +126,8 @@ function ToDoTable({ todos }: ToDoTableProps) {
 
     if (status === "Done") {
       borderClass = "border-teal";
-      textClass = "text-teal";
-      chevronClass = "stroke-teal";
+      textClass = "text-lighter-gray";
+      chevronClass = "stroke-lighter-gray";
       bgClass = "bg-teal";
     } else if (status === "In Progress") {
       borderClass = "border-blue";
