@@ -1,16 +1,14 @@
 import { Plus } from "lucide-react";
 import { CheckCheck, ChevronRight } from "lucide-react";
-import { QueryClient, useQuery, QueryClientProvider } from "react-query";
-// Table Imports
 import {
-  Table,
-  TableBody,
-  // TableCaption,
-  TableCell,
-  // TableHead,
-  // TableHeader,
-  TableRow,
-} from "@/components/ui/table";
+  QueryClient,
+  useQuery,
+  QueryClientProvider,
+  useMutation,
+  useQueryClient,
+} from "react-query";
+// Table Imports
+import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 // Select Imports
 import {
   Select,
@@ -20,12 +18,12 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-
-const queryClient = new QueryClient();
+import { getTodos, updateStatus } from "./lib/api";
 
 type Status = "ToDo" | "InProgress" | "Done";
 
 type ProgressSelectProps = {
+  todoId: number;
   status: Status;
 };
 
@@ -43,6 +41,8 @@ type Todo = {
 type ToDoTableProps = {
   todos: Todo[];
 };
+
+const queryClient = new QueryClient();
 
 function App() {
   return (
@@ -74,24 +74,10 @@ function Nav() {
 }
 
 function Todos() {
-  const { isLoading, error, data } = useQuery("todos", () =>
-    fetch("https://localhost:5001/api/ToDos").then((res) => res.json())
-  );
-
-  // const getStatus = (started: boolean, completed: boolean): Status => {
-  //   if (completed) {
-  //     return "Done";
-  //   } else if (started) {
-  //     return "In Progress";
-  //   } else {
-  //     return "To Do";
-  //   }
-  // };
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  // const todos = data?.map((todo: any) => ({
-  //   ...todo,
-  //   status: getStatus(todo.started, todo.completed),
-  // }));
+  const { isLoading, error, data } = useQuery({
+    queryKey: ["todos"],
+    queryFn: getTodos,
+  });
 
   if (isLoading) return <div className="flex-1 px-4 pt-6">"Loading..."</div>;
   if (error instanceof Error)
@@ -136,27 +122,11 @@ function ToDoTable({ todos }: ToDoTableProps) {
       <Table>
         <TableBody>
           {todos.map((todo) => {
-            // const classes = getTableCellClass(todo.status);
             return (
               <TableRow key={todo.id}>
                 <TableCell className="w-32 p-0">
                   <div className="border-r-[1px] border-lighter-gray px-2">
-                    <ProgressSelect status={todo.status}></ProgressSelect>
-                    {/* <div className="border-r-[1px] border-lighter-gray pr-3">
-                    <div
-                      className={`flex items-center justify-between space-x-1 rounded-full border-2 px-2 py-1 font-medium ${classes.borderClass} ${classes.bgClass}`}
-                    >
-                      <p
-                        className={`text-xs font-semibold tracking-wide ${classes.textClass}`}
-                      >
-                        {todo.status}
-                      </p>
-                      <ChevronDown
-                        size={16}
-                        className={`stroke-[3px] ${classes.chevronClass}`}
-                      />
-                    </div>
-                  </div> */}
+                    <ProgressSelect todoId={todo.id} status={todo.status} />
                   </div>
                 </TableCell>
                 <TableCell className="px-3 py-4 text-base font-semibold text-darker-gray">
@@ -192,7 +162,15 @@ function Footer() {
   );
 }
 
-function ProgressSelect({ status }: ProgressSelectProps) {
+function ProgressSelect({ todoId, status }: ProgressSelectProps) {
+  const queryClient = useQueryClient();
+  const mutation = useMutation({
+    mutationFn: (newStatus: string) => updateStatus(todoId, newStatus),
+    onSuccess: () => {
+      // Invalidate and refetch
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
+  });
   const getTableCellClass = (status: Status) => {
     let trigger =
       "border-medium-gray text-medium-gray bg-none focus:ring-medium-gray";
@@ -210,7 +188,12 @@ function ProgressSelect({ status }: ProgressSelectProps) {
   };
   const classes = getTableCellClass(status);
   return (
-    <Select>
+    <Select
+      defaultValue={status}
+      onValueChange={(value) => {
+        mutation.mutate(value);
+      }}
+    >
       <SelectTrigger
         className={`w-28 ${classes.trigger}`}
         iconClassName={classes.triggerIcon}
@@ -227,9 +210,8 @@ function ProgressSelect({ status }: ProgressSelectProps) {
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
-          {/* <SelectLabel>Fruits</SelectLabel> */}
-          <SelectItem value="To Do">To Do</SelectItem>
-          <SelectItem value="In Progress">In Progress</SelectItem>
+          <SelectItem value="ToDo">To Do</SelectItem>
+          <SelectItem value="InProgress">In Progress</SelectItem>
           <SelectItem value="Done">Done</SelectItem>
         </SelectGroup>
       </SelectContent>
