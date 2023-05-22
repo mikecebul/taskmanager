@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi.Models;
 using System;
+using System.Text.Json.Serialization;
 using TaskManager.Services.Services;
 
 namespace TaskManager.Api
@@ -23,7 +24,12 @@ namespace TaskManager.Api
         {
             Services.ServicesStartup.ConfigureServices(services, Configuration);
 
-            services.AddControllers();
+            services.AddControllers()
+                .AddJsonOptions(options =>
+                {
+                  options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+
+                });
 
             services.AddSwaggerGen(c =>
             {

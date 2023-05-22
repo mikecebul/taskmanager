@@ -10,7 +10,6 @@ namespace TaskManager.Web.Models
         public string Description { get; set; }
         public DateTime DueDate { get; set; }
         public string Notes { get; set; }
-        public bool Started { get; set;}
-        public bool Completed { get; set; }
+        public Status Status { get; set; }
   }
 }

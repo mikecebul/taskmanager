@@ -1,5 +1,5 @@
 import { Plus } from "lucide-react";
-import { CheckCheck, ChevronRight, ChevronDown } from "lucide-react";
+import { CheckCheck, ChevronRight } from "lucide-react";
 import { QueryClient, useQuery, QueryClientProvider } from "react-query";
 // Table Imports
 import {
@@ -19,7 +19,6 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  SelectIcon,
 } from "@/components/ui/select";
 
 const queryClient = new QueryClient();
@@ -48,7 +47,7 @@ type ToDoTableProps = {
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col min-h-screen">
+      <div className="flex min-h-screen flex-col">
         <Nav />
         <Todos />
         <Footer />
@@ -134,7 +133,7 @@ function ToDoTable({ todos }: ToDoTableProps) {
   };
 
   return (
-    <div className="border border-white rounded-md shadow-lg">
+    <div className="rounded-md border border-white shadow-lg">
       <Table>
         {/* <TableCaption>A list of your ToDo's.</TableCaption> */}
         <TableBody>
@@ -163,10 +162,10 @@ function ToDoTable({ todos }: ToDoTableProps) {
                   </div>
                 </TableCell>
                 <TableCell className="px-3 py-4 text-base font-semibold text-darker-gray">
-                  <p className="overflow-hidden truncate w-36">{todo.title}</p>
+                  <p className="w-36 overflow-hidden truncate">{todo.title}</p>
                 </TableCell>
                 <TableCell className="p-2">
-                  <div className="flex items-center justify-end min-w-full">
+                  <div className="flex min-w-full items-center justify-end">
                     <div
                       className={`mr-1 h-3 w-3 rounded-full ${getDueDateColorClass(
                         todo.duedate
@@ -189,7 +188,7 @@ function ToDoTable({ todos }: ToDoTableProps) {
 
 function Footer() {
   return (
-    <footer className="flex justify-end px-2 py-4 bg-near-black">
+    <footer className="flex justify-end bg-near-black px-2 py-4">
       <p className="text-xs text-medium-gray">Privacy Policy</p>
     </footer>
   );

@@ -5,9 +5,9 @@ namespace TaskManager.Common.Contracts.ToDo
 {
   public enum Status
   {
-    none,
-    started,
-    done
+    ToDo,
+    InProgress,
+    Done
   }
   public class ToDoDto
     {
@@ -26,10 +26,7 @@ namespace TaskManager.Common.Contracts.ToDo
         [JsonPropertyName("notes")]
         public string Notes { get; set; }
 
-        [JsonPropertyName("started")]
-        public bool Started { get; set; }
-
-        [JsonPropertyName("completed")]
-        public bool Completed { get; set; }
+        [JsonPropertyName("status")]
+        public Status Status { get; set; }
   }
 }
