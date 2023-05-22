@@ -23,7 +23,7 @@ import {
 
 const queryClient = new QueryClient();
 
-type Status = "To Do" | "In Progress" | "Done";
+type Status = "ToDo" | "InProgress" | "Done";
 
 type ProgressSelectProps = {
   status: Status;
@@ -78,20 +78,20 @@ function Todos() {
     fetch("https://localhost:5001/api/ToDos").then((res) => res.json())
   );
 
-  const getStatus = (started: boolean, completed: boolean): Status => {
-    if (completed) {
-      return "Done";
-    } else if (started) {
-      return "In Progress";
-    } else {
-      return "To Do";
-    }
-  };
+  // const getStatus = (started: boolean, completed: boolean): Status => {
+  //   if (completed) {
+  //     return "Done";
+  //   } else if (started) {
+  //     return "In Progress";
+  //   } else {
+  //     return "To Do";
+  //   }
+  // };
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const todos = data?.map((todo: any) => ({
-    ...todo,
-    status: getStatus(todo.started, todo.completed),
-  }));
+  // const todos = data?.map((todo: any) => ({
+  //   ...todo,
+  //   status: getStatus(todo.started, todo.completed),
+  // }));
 
   if (isLoading) return <div className="flex-1 px-4 pt-6">"Loading..."</div>;
   if (error instanceof Error)
@@ -110,7 +110,7 @@ function Todos() {
         <p className="pl-2 text-lg font-semibold">Create</p>
       </div>
       <div className="pt-12 text-lg font-semibold">
-        <ToDoTable todos={todos || []} />
+        <ToDoTable todos={data} />
       </div>
     </main>
   );
@@ -120,7 +120,6 @@ function ToDoTable({ todos }: ToDoTableProps) {
   const getDueDateColorClass = (dueDate: string) => {
     const now = Date.now();
     const due = new Date(dueDate).getTime();
-    console.log("Due: ", due);
     const oneWeekMilliseconds = 1000 * 60 * 60 * 24 * 7;
 
     if (due < now) {
@@ -135,7 +134,6 @@ function ToDoTable({ todos }: ToDoTableProps) {
   return (
     <div className="rounded-md border border-white shadow-lg">
       <Table>
-        {/* <TableCaption>A list of your ToDo's.</TableCaption> */}
         <TableBody>
           {todos.map((todo) => {
             // const classes = getTableCellClass(todo.status);
@@ -203,7 +201,7 @@ function ProgressSelect({ status }: ProgressSelectProps) {
     if (status === "Done") {
       trigger = "border-teal text-lighter-gray bg-teal focus:ring-teal";
       triggerIcon = "stroke-lighter-gray";
-    } else if (status === "In Progress") {
+    } else if (status === "InProgress") {
       trigger = "border-blue text-blue bg-none focus:ring-blue";
       triggerIcon = "stroke-blue";
     }
@@ -217,7 +215,15 @@ function ProgressSelect({ status }: ProgressSelectProps) {
         className={`w-28 ${classes.trigger}`}
         iconClassName={classes.triggerIcon}
       >
-        <SelectValue placeholder={status} />
+        <SelectValue
+          placeholder={
+            status === "ToDo"
+              ? "To Do"
+              : status === "InProgress"
+              ? "In Progress"
+              : "Done"
+          }
+        />
       </SelectTrigger>
       <SelectContent>
         <SelectGroup>
