@@ -30,6 +30,13 @@ namespace TaskManager.Services.Services
             return ToDoMapper.DomainToDto(toDo);
         }
 
+        public async Task<ToDoDto> PatchAsync(int id, ToDoUpdateDto dto)
+        {
+          var toDo = await _toDoRepository.PatchAsync(id, dto);
+
+          return ToDoMapper.DomainToDto(toDo);
+        }
+
         public async Task<ToDoDto> PutAsync(ToDoDto dto)
         {
             var toDo = await _toDoRepository.PutAsync(ToDoMapper.DtoToDomain(dto));

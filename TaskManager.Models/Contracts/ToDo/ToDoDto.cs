@@ -29,4 +29,21 @@ namespace TaskManager.Common.Contracts.ToDo
         [JsonPropertyName("status")]
         public Status Status { get; set; }
   }
+  public class ToDoUpdateDto
+    {
+        [JsonPropertyName("title")]
+        public string Title { get; set; }
+
+        [JsonPropertyName("description")]
+        public string Description { get; set; }
+
+        [JsonPropertyName("duedate")]
+        public DateTime? DueDate { get; set; }
+
+        [JsonPropertyName("notes")]
+        public string Notes { get; set; }
+
+        [JsonPropertyName("status")]
+        public Status? Status { get; set; }
+    }
 }

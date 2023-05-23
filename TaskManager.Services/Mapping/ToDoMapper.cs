@@ -1,4 +1,5 @@
-﻿using TaskManager.Common.Contracts.ToDo;
+﻿using System;
+using TaskManager.Common.Contracts.ToDo;
 using TaskManager.Data.Models;
 
 namespace TaskManager.Services.Mapping
@@ -24,5 +25,16 @@ namespace TaskManager.Services.Mapping
             Notes = dto.Notes,
             Status = dto.Status,
         };
-    }
+        public static ToDo DtoToDomain(ToDoUpdateDto dto)
+        {
+          return new ToDo
+          {
+            Title = dto.Title,
+            Description = dto.Description,
+            DueDate = dto.DueDate ?? default(DateTime),
+            Notes = dto.Notes,
+            Status = dto.Status ?? default(Status)
+          };
+        }
+  }
 }

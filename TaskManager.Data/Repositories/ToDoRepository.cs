@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using TaskManager.Common.Contracts.ToDo;
 using TaskManager.Data.Framework;
 using TaskManager.Data.Models;
 
@@ -24,6 +25,51 @@ namespace TaskManager.Data.Repositories
         public async Task<ToDo> GetAsync(int id)
         {
             return await Task.FromResult(_context.ToDo.AsNoTracking().FirstOrDefault(x => x.Id == id));
+        }
+
+        public async Task<ToDo> PatchAsync(int id, ToDoUpdateDto dto)
+        {
+          // 1. Retrieve the existing ToDo item from the database
+          var toDo = await _context.ToDo.FindAsync(id);
+
+          // 2. Check if the ToDo item exists
+          if (toDo == null)
+          {
+            // Return null if not found
+            return null;
+          }
+
+          // 3. Update the ToDo item fields if the DTO has a non-null value
+          if (dto.Title != null)
+          {
+            toDo.Title = dto.Title;
+          }
+
+          if (dto.Description != null)
+          {
+            toDo.Description = dto.Description;
+          }
+
+          if (dto.DueDate.HasValue)
+          {
+            toDo.DueDate = dto.DueDate.Value;
+          }
+
+          if (dto.Notes != null)
+          {
+            toDo.Notes = dto.Notes;
+          }
+
+          if (dto.Status.HasValue)
+          {
+            toDo.Status = dto.Status.Value;
+          }
+
+          // 4. Save the changes
+          await _context.SaveChangesAsync();
+
+          // 5. Return the updated ToDo item
+          return toDo;
         }
 
         public async Task<ToDo> PutAsync(ToDo toDo)

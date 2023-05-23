@@ -5,7 +5,7 @@ using TaskManager.Services.Services;
 
 namespace TaskManager.Api.Controllers
 {
-    [Route("api/[controller]")]
+  [Route("api/[controller]")]
     [ApiController]
     public class ToDosController : ControllerBase
     {
@@ -34,8 +34,30 @@ namespace TaskManager.Api.Controllers
             return toDo != null ? (IActionResult) Ok(toDo) : NotFound();
         }
 
-        // PUT: api/ToDos/5
-        [HttpPut("{id}")]
+    // PATCH: api/ToDos/5
+    [HttpPatch("{id}")]
+    public async Task<IActionResult> Patch(int id, ToDoUpdateDto updateDto)
+    {
+      var existingToDo = await _toDoService.GetAsync(id);
+
+      if (existingToDo == null)
+      {
+        return NotFound();
+      }
+
+      var updateToDo = await _toDoService.PatchAsync(id, updateDto);
+
+      if (updateToDo == null)
+      {
+        return BadRequest("Unable to update the todo item.");
+      }
+
+      return NoContent();
+
+    }
+
+      // PUT: api/ToDos/5
+      [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, ToDoDto dto)
         {
             if (id != dto.Id)

@@ -10,7 +10,7 @@ export async function getTodos() {
 
 export async function updateStatus(todoId: number, newStatus: string) {
   const response = await fetch(`https://localhost:5001/api/ToDos/${todoId}`, {
-    method: "PUT",
+    method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
