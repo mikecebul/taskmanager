@@ -1,5 +1,5 @@
-import { getTodos, updateStatus } from "@/lib/api";
-import { useMutation, useQuery, useQueryClient } from "react-query";
+import { getTodoById, getTodos, updateStatus } from "@/lib/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, ChevronRight } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
@@ -11,34 +11,25 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { TableSkeleton } from "@/components/tableSkeleton";
-
-type Status = "ToDo" | "InProgress" | "Done";
-
-type ProgressSelectProps = {
-  todoId: number;
-  status: Status;
-};
-
-type Todo = {
-  id: number;
-  title: string;
-  description: string;
-  duedate: string;
-  notes: string;
-  started: boolean;
-  completed: boolean;
-  status: Status;
-};
+import { Link } from "react-router-dom";
+import type { Todo, Status, ProgressSelectProps } from "@/lib/types";
+import { useState } from "react";
 
 function Home() {
   return (
     <main className="flex-1 px-4 pt-6">
       <h1 className="text-2xl font-bold tracking-wide">To Dos</h1>
-      <div className="flex pt-6">
-        <button className="rounded-full border-[3px] border-blue text-xl text-blue hover:border-darker-blue">
-          <Plus className="stroke-[3px] text-blue hover:text-darker-blue"></Plus>
-        </button>
-        <p className="pl-2 text-lg font-semibold">Create</p>
+      <div className="pt-6 ">
+        <Link
+          to="/"
+          aria-label="Create new todo"
+          className="inline-flex items-center rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+        >
+          <div className="rounded-full border-[3px] border-blue text-xl text-blue group-hover:border-darker-blue">
+            <Plus className="stroke-[3px] text-blue group-hover:text-darker-blue"></Plus>
+          </div>
+          <p className="pl-2 text-lg font-semibold">Create</p>
+        </Link>
       </div>
       <div className="pt-12 text-lg font-semibold">
         <ToDoTable />
@@ -52,7 +43,7 @@ function ToDoTable() {
     isLoading,
     error,
     data: todos,
-  } = useQuery<Todo[]>({
+  } = useQuery<Todo[], Error>({
     queryKey: ["todos"],
     queryFn: getTodos,
   });
@@ -84,29 +75,39 @@ function ToDoTable() {
         <TableBody>
           {todos?.map((todo) => {
             return (
-              <TableRow key={todo.id} className="">
+              <TableRow key={todo.id}>
                 <TableCell className="w-32 p-0">
                   <div className="border-r-[1px] border-lighter-gray px-2">
-                    <ProgressSelect todoId={todo.id} status={todo.status} />
-                  </div>
-                </TableCell>
-                <TableCell className="px-3 py-4 text-base font-semibold text-darker-gray">
-                  <p className="min-h-[24px] w-36 overflow-hidden truncate">
-                    {todo.title}
-                  </p>
-                </TableCell>
-                <TableCell className="p-2">
-                  <div className="flex items-center justify-end min-w-full">
-                    <div
-                      className={`mr-1 h-3 w-3 rounded-full ${getDueDateColorClass(
-                        todo.duedate
-                      )}`}
-                    ></div>
-                    <ChevronRight
-                      size={16}
-                      className="stroke-[3px] text-medium-gray"
+                    <ProgressSelect
+                      todoId={todo.id}
+                      initialStatus={todo.status}
                     />
                   </div>
+                </TableCell>
+                <TableCell className="px-2 py-2 text-base font-semibold text-darker-gray">
+                  <Link
+                    to={`/todos/${todo.id}`}
+                    className="inline-block w-full p-2 rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                  >
+                    <div className="flex items-center justify-between">
+                      <div>
+                        <p className="w-40 overflow-hidden truncate">
+                          {todo.title}
+                        </p>
+                      </div>
+                      <div className="flex items-center justify-end">
+                        <div
+                          className={`mr-1 h-3 w-3 rounded-full ${getDueDateColorClass(
+                            todo.duedate
+                          )}`}
+                        ></div>
+                        <ChevronRight
+                          size={16}
+                          className="stroke-[3px] text-medium-gray"
+                        />
+                      </div>
+                    </div>
+                  </Link>
                 </TableCell>
               </TableRow>
             );
@@ -117,15 +118,31 @@ function ToDoTable() {
   );
 }
 
-function ProgressSelect({ todoId, status }: ProgressSelectProps) {
-  const queryClient = useQueryClient();
+function ProgressSelect({ todoId, initialStatus }: ProgressSelectProps) {
+  // const queryClient = useQueryClient();
+  const [status, setStatus] = useState(initialStatus);
+
   const mutation = useMutation({
-    mutationFn: (newStatus: string) => updateStatus(todoId, newStatus),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    mutationFn: updateStatus,
+    onMutate: (variables) => {
+      // A mutation is about to happen!
+      setStatus(variables.newStatus);
+      // Optionally return a context containing data to use when for example rolling back
+      return { id: variables.todoId };
+    },
+    onError: (error, variables, context) => {
+      // An error happened!
+      console.log(`rolling back optimistic update with id ${context.id}`);
+      console.log(`Error: ${error}`);
+    },
+    onSuccess: (data, variables, context) => {
+      // Boom baby!
+    },
+    onSettled: (data, error, variables, context) => {
+      // Error or success... doesn't matter!
     },
   });
+
   const getTableCellClass = (status: Status) => {
     let trigger =
       "border-medium-gray text-medium-gray bg-none focus:ring-medium-gray";
@@ -141,12 +158,13 @@ function ProgressSelect({ todoId, status }: ProgressSelectProps) {
 
     return { trigger, triggerIcon };
   };
+
   const classes = getTableCellClass(status);
   return (
     <Select
       defaultValue={status}
-      onValueChange={(value) => {
-        mutation.mutate(value);
+      onValueChange={(newStatus: Status) => {
+        mutation.mutate({ todoId, newStatus });
       }}
     >
       <SelectTrigger

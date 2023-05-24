@@ -1,18 +1,16 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CheckCheck } from "lucide-react";
-import {
-  QueryClient,
-  QueryClientProvider,
-} from "react-query";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "@/pages/Home";
 import TodoDetails from "./pages/TodoDetails";
-
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
+      <ReactQueryDevtools initialIsOpen={false} />
       <Router>
         <div className="flex flex-col min-h-screen">
           <Nav />
