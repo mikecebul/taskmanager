@@ -1,57 +1,28 @@
-import { Plus } from "lucide-react";
-import { CheckCheck, ChevronRight } from "lucide-react";
+import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
+import { CheckCheck } from "lucide-react";
 import {
   QueryClient,
-  useQuery,
   QueryClientProvider,
-  useMutation,
-  useQueryClient,
 } from "react-query";
-// Table Imports
-import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
-// Select Imports
-import {
-  Select,
-  SelectContent,
-  SelectGroup,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { getTodos, updateStatus } from "./lib/api";
+import Home from "@/pages/Home";
+import TodoDetails from "./pages/TodoDetails";
 
-type Status = "ToDo" | "InProgress" | "Done";
-
-type ProgressSelectProps = {
-  todoId: number;
-  status: Status;
-};
-
-type Todo = {
-  id: number;
-  title: string;
-  description: string;
-  duedate: string;
-  notes: string;
-  started: boolean;
-  completed: boolean;
-  status: Status;
-};
-
-type ToDoTableProps = {
-  todos: Todo[];
-};
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex min-h-screen flex-col">
-        <Nav />
-        <Todos />
-        <Footer />
-      </div>
+      <Router>
+        <div className="flex flex-col min-h-screen">
+          <Nav />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/todos/:id" element={<TodoDetails />} />
+          </Routes>
+          <Footer />
+        </div>
+      </Router>
     </QueryClientProvider>
   );
 }
@@ -73,149 +44,11 @@ function Nav() {
   );
 }
 
-function Todos() {
-  const { isLoading, error, data } = useQuery({
-    queryKey: ["todos"],
-    queryFn: getTodos,
-  });
-
-  if (isLoading) return <div className="flex-1 px-4 pt-6">"Loading..."</div>;
-  if (error instanceof Error)
-    return (
-      <div className="flex-1 px-4 pt-6">
-        an error has occurred: {error.message}
-      </div>
-    );
-  return (
-    <main className="flex-1 px-4 pt-6">
-      <h1 className="text-2xl font-bold tracking-wide">To Dos</h1>
-      <div className="flex pt-6">
-        <button className="rounded-full border-[3px] border-blue text-xl text-blue hover:border-darker-blue">
-          <Plus className="stroke-[3px] text-blue hover:text-darker-blue"></Plus>
-        </button>
-        <p className="pl-2 text-lg font-semibold">Create</p>
-      </div>
-      <div className="pt-12 text-lg font-semibold">
-        <ToDoTable todos={data} />
-      </div>
-    </main>
-  );
-}
-
-function ToDoTable({ todos }: ToDoTableProps) {
-  const getDueDateColorClass = (dueDate: string) => {
-    const now = Date.now();
-    const due = new Date(dueDate).getTime();
-    const oneWeekMilliseconds = 1000 * 60 * 60 * 24 * 7;
-
-    if (due < now) {
-      return "bg-red";
-    } else if (due < now + oneWeekMilliseconds) {
-      return "bg-yellow";
-    } else {
-      return "bg-teal";
-    }
-  };
-
-  return (
-    <div className="rounded-md border border-white shadow-lg">
-      <Table>
-        <TableBody>
-          {todos.map((todo) => {
-            return (
-              <TableRow key={todo.id}>
-                <TableCell className="w-32 p-0">
-                  <div className="border-r-[1px] border-lighter-gray px-2">
-                    <ProgressSelect todoId={todo.id} status={todo.status} />
-                  </div>
-                </TableCell>
-                <TableCell className="px-3 py-4 text-base font-semibold text-darker-gray">
-                  <p className="w-36 overflow-hidden truncate">{todo.title}</p>
-                </TableCell>
-                <TableCell className="p-2">
-                  <div className="flex min-w-full items-center justify-end">
-                    <div
-                      className={`mr-1 h-3 w-3 rounded-full ${getDueDateColorClass(
-                        todo.duedate
-                      )}`}
-                    ></div>
-                    <ChevronRight
-                      size={16}
-                      className="stroke-[3px] text-medium-gray"
-                    />
-                  </div>
-                </TableCell>
-              </TableRow>
-            );
-          })}
-        </TableBody>
-      </Table>
-    </div>
-  );
-}
-
 function Footer() {
   return (
-    <footer className="flex justify-end bg-near-black px-2 py-4">
+    <footer className="flex justify-end px-2 py-4 bg-near-black">
       <p className="text-xs text-medium-gray">Privacy Policy</p>
     </footer>
-  );
-}
-
-function ProgressSelect({ todoId, status }: ProgressSelectProps) {
-  const queryClient = useQueryClient();
-  const mutation = useMutation({
-    mutationFn: (newStatus: string) => updateStatus(todoId, newStatus),
-    onSuccess: () => {
-      // Invalidate and refetch
-      queryClient.invalidateQueries({ queryKey: ["todos"] });
-    },
-  });
-  const getTableCellClass = (status: Status) => {
-    let trigger =
-      "border-medium-gray text-medium-gray bg-none focus:ring-medium-gray";
-    let triggerIcon = "stroke-medium-gray";
-
-    if (status === "Done") {
-      trigger = "border-teal text-lighter-gray bg-teal focus:ring-teal";
-      triggerIcon = "stroke-lighter-gray";
-    } else if (status === "InProgress") {
-      trigger = "border-blue text-blue bg-none focus:ring-blue";
-      triggerIcon = "stroke-blue";
-    }
-
-    return { trigger, triggerIcon };
-  };
-  const classes = getTableCellClass(status);
-  return (
-    <Select
-      defaultValue={status}
-      onValueChange={(value) => {
-        mutation.mutate(value);
-      }}
-    >
-      <SelectTrigger
-        className={`w-28 ${classes.trigger}`}
-        iconClassName={classes.triggerIcon}
-      >
-        <SelectValue
-          placeholder={
-            status === "ToDo"
-              ? "To Do"
-              : status === "InProgress"
-              ? "In Progress"
-              : "Done"
-          }
-        />
-      </SelectTrigger>
-      <SelectContent>
-        <SelectGroup>
-          <SelectItem value="ToDo">To Do</SelectItem>
-          <SelectItem value="InProgress">In Progress</SelectItem>
-          <SelectItem value="Done">Done</SelectItem>
-        </SelectGroup>
-      </SelectContent>
-    </Select>
   );
 }
 
