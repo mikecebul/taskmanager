@@ -11,7 +11,5 @@ export type Todo = {
   description: string;
   duedate: string;
   notes: string;
-  started: boolean;
-  completed: boolean;
   status: Status;
 };

@@ -1,5 +1,5 @@
 import { getTodoById, getTodos, updateStatus } from "@/lib/api";
-import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
 import { Plus, ChevronRight } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
@@ -119,28 +119,33 @@ function ToDoTable() {
 }
 
 function ProgressSelect({ todoId, initialStatus }: ProgressSelectProps) {
-  // const queryClient = useQueryClient();
   const [status, setStatus] = useState(initialStatus);
 
-  const mutation = useMutation({
+  const queryClient = new QueryClient()
+
+  queryClient.setMutationDefaults(['updateStatus'],{
     mutationFn: updateStatus,
-    onMutate: (variables) => {
-      // A mutation is about to happen!
+    onMutate: async (variables) => {
+      await queryClient.cancelQueries({ queryKey: ['todos'] })
+      const optimisticTodo = { id: todoId, status: variables.status }
+      queryClient.setQueryData(['todos'], (old: Todo[] | undefined) => [[...old], optimisticTodo])
+
       setStatus(variables.newStatus);
-      // Optionally return a context containing data to use when for example rolling back
-      return { id: variables.todoId };
+
+      return { optimisticTodo }
+    },
+    onSuccess: (result, variables, context) => {
+      queryClient.setQueryData(['todos'], (old: Todo[] | undefined) =>
+        old?.map((todo) =>
+          todo.id === context.optimisticTodo.id ? result : todo
+        )
     },
     onError: (error, variables, context) => {
-      // An error happened!
-      console.log(`rolling back optimistic update with id ${context.id}`);
-      console.log(`Error: ${error}`);
+      queryClient.setQueryData(['todos'], (old: Todo[] | undefined) =>
+        old?.filter((todo) => todo.id !== context.optimisticTodo.id),
+      )
     },
-    onSuccess: (data, variables, context) => {
-      // Boom baby!
-    },
-    onSettled: (data, error, variables, context) => {
-      // Error or success... doesn't matter!
-    },
+    retry: 3,
   });
 
   const getTableCellClass = (status: Status) => {
