@@ -1,5 +1,5 @@
-import { getTodoById, getTodos, updateStatus } from "@/lib/api";
-import { QueryClient, useMutation, useQuery } from "@tanstack/react-query";
+import { getTodos, updateStatus } from "@/lib/api";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, ChevronRight } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
@@ -12,7 +12,7 @@ import {
 } from "@/components/ui/select";
 import { TableSkeleton } from "@/components/tableSkeleton";
 import { Link } from "react-router-dom";
-import type { Todo, Status, ProgressSelectProps } from "@/lib/types";
+import type { Todo, Status, StatusUpdateProps } from "@/lib/types";
 import { useState } from "react";
 
 function Home() {
@@ -23,7 +23,7 @@ function Home() {
         <Link
           to="/"
           aria-label="Create new todo"
-          className="inline-flex items-center rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+          className="group inline-flex items-center rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
         >
           <div className="rounded-full border-[3px] border-blue text-xl text-blue group-hover:border-darker-blue">
             <Plus className="stroke-[3px] text-blue group-hover:text-darker-blue"></Plus>
@@ -43,7 +43,7 @@ function ToDoTable() {
     isLoading,
     error,
     data: todos,
-  } = useQuery<Todo[], Error>({
+  } = useQuery({
     queryKey: ["todos"],
     queryFn: getTodos,
   });
@@ -70,7 +70,7 @@ function ToDoTable() {
   };
 
   return (
-    <div className="border border-white rounded-md shadow-lg">
+    <div className="rounded-md border border-white shadow-lg">
       <Table>
         <TableBody>
           {todos?.map((todo) => {
@@ -78,16 +78,13 @@ function ToDoTable() {
               <TableRow key={todo.id}>
                 <TableCell className="w-32 p-0">
                   <div className="border-r-[1px] border-lighter-gray px-2">
-                    <ProgressSelect
-                      todoId={todo.id}
-                      initialStatus={todo.status}
-                    />
+                    <ProgressSelect todo={todo} />
                   </div>
                 </TableCell>
                 <TableCell className="px-2 py-2 text-base font-semibold text-darker-gray">
                   <Link
                     to={`/todos/${todo.id}`}
-                    className="inline-block w-full p-2 rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                    className="inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
                   >
                     <div className="flex items-center justify-between">
                       <div>
@@ -118,34 +115,26 @@ function ToDoTable() {
   );
 }
 
-function ProgressSelect({ todoId, initialStatus }: ProgressSelectProps) {
-  const [status, setStatus] = useState(initialStatus);
+function ProgressSelect({ todo }: { todo: Todo }) {
+  const [status, setStatus] = useState(todo.status);
+  const queryClient = useQueryClient();
 
-  const queryClient = new QueryClient()
-
-  queryClient.setMutationDefaults(['updateStatus'],{
+  const mutation = useMutation({
     mutationFn: updateStatus,
-    onMutate: async (variables) => {
-      await queryClient.cancelQueries({ queryKey: ['todos'] })
-      const optimisticTodo = { id: todoId, status: variables.status }
-      queryClient.setQueryData(['todos'], (old: Todo[] | undefined) => [[...old], optimisticTodo])
-
-      setStatus(variables.newStatus);
-
-      return { optimisticTodo }
+    onMutate: async ({ todo, newStatus }: StatusUpdateProps) => {
+      setStatus(newStatus);
+      await queryClient.cancelQueries({ queryKey: ["todos", todo.id] });
+      const previousTodo = queryClient.getQueryData(["todos", todo.id]);
+      queryClient.setQueryData(["todos", todo.id], { status: newStatus });
+      return { previousTodo, todo };
     },
-    onSuccess: (result, variables, context) => {
-      queryClient.setQueryData(['todos'], (old: Todo[] | undefined) =>
-        old?.map((todo) =>
-          todo.id === context.optimisticTodo.id ? result : todo
-        )
+    onError: (_err, { todo }, context) => {
+      queryClient.setQueryData(["todos", todo.id], context?.previousTodo);
+      setStatus((context?.previousTodo as Todo)?.status);
     },
-    onError: (error, variables, context) => {
-      queryClient.setQueryData(['todos'], (old: Todo[] | undefined) =>
-        old?.filter((todo) => todo.id !== context.optimisticTodo.id),
-      )
+    onSettled: (newTodo) => {
+      queryClient.invalidateQueries({ queryKey: ["todos", newTodo?.id] });
     },
-    retry: 3,
   });
 
   const getTableCellClass = (status: Status) => {
@@ -164,12 +153,12 @@ function ProgressSelect({ todoId, initialStatus }: ProgressSelectProps) {
     return { trigger, triggerIcon };
   };
 
-  const classes = getTableCellClass(status);
+  const classes = getTableCellClass(todo.status);
   return (
     <Select
       defaultValue={status}
-      onValueChange={(newStatus: Status) => {
-        mutation.mutate({ todoId, newStatus });
+      onValueChange={(status: Status) => {
+        mutation.mutate({ todo: todo, newStatus: status });
       }}
     >
       <SelectTrigger

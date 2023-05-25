@@ -1,8 +1,8 @@
 export type Status = "ToDo" | "InProgress" | "Done";
 
-export type ProgressSelectProps = {
-  todoId: number;
-  initialStatus: Status;
+export type StatusUpdateProps = {
+  todo: Todo;
+  newStatus: Status;
 };
 
 export type Todo = {
