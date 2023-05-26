@@ -1,37 +1,16 @@
+import { CreateForm } from "@/components/createForm";
 import { Link } from "react-router-dom";
 
 function CreateTodoPage() {
   return (
     <main className="flex-1 px-4 pt-6">
       <h1 className="text-2xl font-bold tracking-wide">Create To Do</h1>
-      <TodoGrid />
+      <CreateForm />
       <Links />
     </main>
   );
 }
 
-const TodoGrid = () => {
-  return (
-    <>
-      <div className="grid grid-cols-4 pt-6">
-        <p className="col-span-1 text-xs font-semibold">Title</p>
-        <p className="col-span-3 text-xs font-medium">Text Box</p>
-      </div>
-      <div className="grid grid-cols-4 pt-6">
-        <p className="col-span-1 text-xs font-semibold">Description</p>
-        <p className="text-xs font-medium col-span-23">Text Box</p>
-      </div>
-      <div className="grid grid-cols-4 pt-6">
-        <p className="col-span-1 text-xs font-semibold">Due Date</p>
-        <p className="col-span-3 text-xs font-medium">Text Box</p>
-      </div>
-      <div className="grid grid-cols-4 pt-6">
-        <p className="col-span-1 text-xs font-semibold">Notes</p>
-        <p className="col-span-3 text-xs font-medium">Text Box</p>
-      </div>
-    </>
-  );
-};
 
 const Links = () => {
   return (
