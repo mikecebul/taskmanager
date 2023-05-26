@@ -23,7 +23,8 @@ function Home() {
         <Link
           to="/create"
           aria-label="Create new todo"
-          className="inline-flex items-center rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+          className="hover:ring-offset-none group inline-flex items-center rounded-full ring-offset-background hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 focus:hover:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
+          // className=" rounded-full bg-blue px-10 py-2 text-xs font-medium shadow hover:bg-darker-blue focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 hover:focus:scale-105 disabled:cursor-not-allowed disabled:opacity-50"
         >
           <div className="rounded-full border-[3px] border-blue text-xl text-blue group-hover:border-darker-blue">
             <Plus className="stroke-[3px] text-blue group-hover:text-darker-blue"></Plus>
@@ -70,7 +71,7 @@ function ToDoTable() {
   };
 
   return (
-    <div className="border border-white rounded-md shadow-lg">
+    <div className="rounded-md border border-white shadow-lg">
       <Table>
         <TableBody>
           {todos?.map((todo) => {
@@ -84,7 +85,7 @@ function ToDoTable() {
                 <TableCell className="px-2 py-2 text-base font-semibold text-darker-gray">
                   <Link
                     to={`/todos/${todo.id}`}
-                    className="inline-block w-full p-2 rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                    className="inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
                   >
                     <div className="flex items-center justify-between">
                       <div>

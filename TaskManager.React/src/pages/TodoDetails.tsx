@@ -81,7 +81,7 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Description</p>
-        <p className="text-xs font-medium col-span-23">{todo.description}</p>
+        <p className="col-span-23 text-xs font-medium">{todo.description}</p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Due Date</p>
@@ -99,24 +99,29 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
 
 const Links = ({ id }: LinksProps) => {
   return (
-    <div className="flex items-center justify-between pt-12 space-x-8">
-      <Link to={`/todos/${id}/delete`} className="pl-8">
-        <p className="text-sm font-semibold tracking-wide text-red hover:scale-105 hover:text-darker-red">
+    <div className="flex items-center justify-between space-x-8 pt-12">
+      <Link
+        to={`/todos/${id}/delete`}
+        className="rounded-full focus:outline-none focus:ring-2 focus:ring-red hover:focus:scale-105 hover:focus:ring-darker-red"
+      >
+        <p className="hover:ring-offset-none rounded-fullpx-10 px-8 py-2 text-sm font-semibold tracking-wide text-red ring-offset-background hover:scale-105 hover:text-darker-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
           Delete
         </p>
       </Link>
       <div className="flex items-center justify-end space-x-8">
-        <Link to="/" className="flex items-center justify-center">
-          <p className="text-sm font-semibold tracking-wide text-blue hover:scale-105 hover:text-darker-blue">
+        <Link
+          to="/"
+          className="rounded-full focus:outline-none focus:ring-2 focus:ring-blue hover:focus:scale-105 hover:focus:ring-darker-blue"
+        >
+          <p className="hover:ring-offset-none rounded-fullpx-10 px-8 py-2 text-sm font-semibold tracking-wide text-blue ring-offset-background hover:scale-105 hover:text-darker-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
             Back to List
           </p>
         </Link>
-        <Link to={`/todos/${id}/edit`}>
-          <div className="px-10 py-2 text-xs font-medium rounded-full shadow bg-blue ring-offset-background hover:scale-105 hover:bg-darker-blue hover:ring-offset-secondary-foreground focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-            <p className="text-sm font-semibold tracking-wide text-white">
-              Edit
-            </p>
-          </div>
+        <Link
+          to={`/todos/${id}/edit`}
+          className="hover:ring-offset-none rounded-full bg-blue px-10 py-2 text-xs font-medium shadow ring-offset-background hover:scale-105 hover:bg-darker-blue focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 hover:focus:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <p className="text-sm font-semibold tracking-wide text-white">Edit</p>
         </Link>
       </div>
     </div>
