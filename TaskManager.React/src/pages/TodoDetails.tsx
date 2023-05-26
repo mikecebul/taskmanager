@@ -81,7 +81,7 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Description</p>
-        <p className="col-span-23 text-xs font-medium">{todo.description}</p>
+        <p className="col-span-3 text-xs font-medium">{todo.description}</p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Due Date</p>
@@ -99,21 +99,21 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
 
 const Links = ({ id }: LinksProps) => {
   return (
-    <div className="flex items-center justify-between space-x-8 pt-12">
+    <div className="flex items-center justify-between space-x-0 pt-12">
       <Link
         to={`/todos/${id}/delete`}
         className="rounded-full focus:outline-none focus:ring-2 focus:ring-red hover:focus:scale-105 hover:focus:ring-darker-red"
       >
-        <p className="hover:ring-offset-none rounded-fullpx-10 px-8 py-2 text-sm font-semibold tracking-wide text-red ring-offset-background hover:scale-105 hover:text-darker-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+        <p className="hover:ring-offset-none rounded-full px-4 py-2 text-sm font-semibold tracking-wide text-red ring-offset-background hover:scale-105 hover:text-darker-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
           Delete
         </p>
       </Link>
-      <div className="flex items-center justify-end space-x-8">
+      <div className="flex items-center justify-end space-x-4">
         <Link
           to="/"
           className="rounded-full focus:outline-none focus:ring-2 focus:ring-blue hover:focus:scale-105 hover:focus:ring-darker-blue"
         >
-          <p className="hover:ring-offset-none rounded-fullpx-10 px-8 py-2 text-sm font-semibold tracking-wide text-blue ring-offset-background hover:scale-105 hover:text-darker-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+          <p className="hover:ring-offset-none rounded-full px-4 py-2 text-sm font-semibold tracking-wide text-blue ring-offset-background hover:scale-105 hover:text-darker-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
             Back to List
           </p>
         </Link>

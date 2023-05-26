@@ -110,18 +110,18 @@ const Links = () => {
 
   return (
     <div className="flex items-center justify-end space-x-8 pt-12">
-      <div className="flex items-center justify-end space-x-8">
+      <div className="flex items-center justify-end space-x-4">
         <Link
           to={`/todos/${id}`}
           className="rounded-full focus:outline-none focus:ring-2 focus:ring-blue hover:focus:scale-105 hover:focus:ring-darker-blue"
         >
-          <p className="hover:ring-offset-none rounded-fullpx-10 px-8 py-2 text-sm font-semibold tracking-wide text-blue ring-offset-background hover:scale-105 hover:text-darker-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+          <p className="hover:ring-offset-none rounded-full px-4 py-2 text-sm font-semibold tracking-wide text-blue ring-offset-background hover:scale-105 hover:text-darker-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
             Cancel
           </p>
         </Link>
         <button
           onClick={() => handleDelete()}
-          className="hover:ring-offset-none rounded-full bg-red px-10 py-2 text-xs font-medium shadow ring-offset-background hover:scale-105 hover:bg-darker-red focus:outline-none focus:ring-2 focus:ring-red focus:ring-offset-2 hover:focus:scale-105 hover:focus:ring-darker-red disabled:cursor-not-allowed disabled:opacity-50"
+          className="hover:ring-offset-none rounded-full bg-red px-8 py-2 text-xs font-medium shadow ring-offset-background hover:scale-105 hover:bg-darker-red focus:outline-none focus:ring-2 focus:ring-red focus:ring-offset-2 hover:focus:scale-105 hover:focus:ring-darker-red disabled:cursor-not-allowed disabled:opacity-50"
         >
           <p className="text-sm font-semibold tracking-wide text-white">
             Delete
