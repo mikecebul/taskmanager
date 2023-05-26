@@ -4,6 +4,9 @@ import { CheckCheck } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "@/pages/Home";
 import TodoDetails from "./pages/TodoDetails";
+import EditTodo from "./pages/EditTodo";
+import DeleteTodo from "./pages/DeleteTodo";
+import CreateTodo from "./pages/CreateTodo";
 
 const queryClient = new QueryClient();
 
@@ -17,6 +20,9 @@ function App() {
           <Routes>
             <Route path="/" element={<Home />} />
             <Route path="/todos/:id" element={<TodoDetails />} />
+            <Route path="/todos/:id/edit" element={<EditTodo />} />
+            <Route path="/todos/:id/delete" element={<DeleteTodo />} />
+            <Route path="/create" element={<CreateTodo />} />
           </Routes>
           <Footer />
         </div>

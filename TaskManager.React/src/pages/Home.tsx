@@ -21,7 +21,7 @@ function Home() {
       <h1 className="text-2xl font-bold tracking-wide">To Dos</h1>
       <div className="pt-6 ">
         <Link
-          to="/"
+          to="/create"
           aria-label="Create new todo"
           className="inline-flex items-center rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
         >
