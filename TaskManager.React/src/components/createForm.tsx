@@ -123,7 +123,7 @@ export function CreateForm() {
             type="submit"
             className="rounded-full bg-blue px-10 py-2 text-sm font-semibold tracking-wide text-white shadow ring-offset-background hover:scale-105 hover:bg-darker-blue hover:ring-offset-secondary-foreground focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
-            Edit
+            Create
           </Button>
         </div>
       </form>
