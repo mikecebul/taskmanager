@@ -39,3 +39,22 @@ export async function getTodoById(todoId: string) {
   const data: Todo = await response.json();
   return data;
 }
+
+export async function deleteTodo(todoId: string) {
+  const response = await fetch(`https://localhost:5001/api/ToDos/${todoId}`, {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update status");
+  }
+  if (response.status === 204) {
+    return { message: "Deleted successfully" };
+  } else {
+    const data: Todo = await response.json();
+    return data;
+  }
+}

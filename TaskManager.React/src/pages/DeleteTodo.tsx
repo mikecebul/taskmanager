@@ -1,6 +1,6 @@
-import { Link, useParams } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { getTodoById } from "@/lib/api";
+import { deleteTodo, getTodoById } from "@/lib/api";
 import { TableSkeleton } from "@/components/tableSkeleton";
 import { Status, TodoProp } from "@/lib/types";
 import { FC } from "react";
@@ -8,9 +8,6 @@ import { cn, formatDate } from "@/lib/utils";
 
 type TodoStatusIndicatorProps = {
   status: Status | undefined;
-};
-type LinksProps = {
-  id: string | undefined;
 };
 
 function DeleteTodoPage() {
@@ -36,7 +33,7 @@ function DeleteTodoPage() {
       <h1 className="text-2xl font-bold tracking-wide">Delete To Do</h1>
       <TodoStatusIndicator status={todo.status} />
       <TodoGrid todo={todo} />
-      <Links id={id} />
+      <Links />
     </main>
   );
 }
@@ -81,7 +78,7 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Description</p>
-        <p className="text-xs font-medium col-span-23">{todo.description}</p>
+        <p className="col-span-23 text-xs font-medium">{todo.description}</p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Due Date</p>
@@ -97,22 +94,36 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
   );
 };
 
-const Links = ({ id }: LinksProps) => {
+const Links = () => {
+  const { id } = useParams<{ id: string }>();
+  const navigate = useNavigate();
+
+  const handleDelete = async () => {
+    if (id == undefined) return null;
+    try {
+      await deleteTodo(id);
+      navigate("/");
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
   return (
-    <div className="flex items-center justify-end pt-12 space-x-8">
+    <div className="flex items-center justify-end space-x-8 pt-12">
       <div className="flex items-center justify-end space-x-8">
         <Link to={`/todos/${id}`} className="flex items-center justify-center">
           <p className="text-sm font-semibold tracking-wide text-blue hover:scale-105 hover:text-darker-blue">
             Cancel
           </p>
         </Link>
-        <Link to={`/todos/${id}/delete`}>
-          <div className="px-10 py-2 text-xs font-medium rounded-full shadow bg-red ring-offset-background hover:scale-105 hover:bg-darker-red hover:ring-offset-secondary-foreground focus:outline-none focus:ring-2 focus:ring-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
-            <p className="text-sm font-semibold tracking-wide text-white">
-              Delete
-            </p>
-          </div>
-        </Link>
+        <button
+          onClick={() => handleDelete()}
+          className="rounded-full bg-red px-10 py-2 text-xs font-medium shadow ring-offset-background hover:scale-105 hover:bg-darker-red hover:ring-offset-secondary-foreground focus:outline-none focus:ring-2 focus:ring-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          <p className="text-sm font-semibold tracking-wide text-white">
+            Delete
+          </p>
+        </button>
       </div>
     </div>
   );
