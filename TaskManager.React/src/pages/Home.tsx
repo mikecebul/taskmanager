@@ -23,7 +23,7 @@ function Home() {
         <Link
           to="/"
           aria-label="Create new todo"
-          className="group inline-flex items-center rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+          className="inline-flex items-center rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
         >
           <div className="rounded-full border-[3px] border-blue text-xl text-blue group-hover:border-darker-blue">
             <Plus className="stroke-[3px] text-blue group-hover:text-darker-blue"></Plus>
@@ -70,7 +70,7 @@ function ToDoTable() {
   };
 
   return (
-    <div className="rounded-md border border-white shadow-lg">
+    <div className="border border-white rounded-md shadow-lg">
       <Table>
         <TableBody>
           {todos?.map((todo) => {
@@ -84,7 +84,7 @@ function ToDoTable() {
                 <TableCell className="px-2 py-2 text-base font-semibold text-darker-gray">
                   <Link
                     to={`/todos/${todo.id}`}
-                    className="inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                    className="inline-block w-full p-2 rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
                   >
                     <div className="flex items-center justify-between">
                       <div>
@@ -139,14 +139,16 @@ function ProgressSelect({ todo }: { todo: Todo }) {
 
   const getTableCellClass = (status: Status) => {
     let trigger =
-      "border-medium-gray text-medium-gray bg-none focus:ring-medium-gray";
+      "border-medium-gray text-darker-gray bg-none focus:ring-medium-gray hover:bg-lighter-gray hover:text-black";
     let triggerIcon = "stroke-medium-gray";
 
     if (status === "Done") {
-      trigger = "border-teal text-lighter-gray bg-teal focus:ring-teal";
-      triggerIcon = "stroke-lighter-gray";
+      trigger =
+        "border-teal text-white bg-teal focus:ring-teal hover:bg-darker-teal hover:border-darker-teal hover:text-white";
+      triggerIcon = "stroke-white";
     } else if (status === "InProgress") {
-      trigger = "border-blue text-blue bg-none focus:ring-blue";
+      trigger =
+        "border-blue text-blue bg-none focus:ring-blue hover:text-darker-blue hover:border-darker-blue hover:bg:lighter-gray";
       triggerIcon = "stroke-blue";
     }
 

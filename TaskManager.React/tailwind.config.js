@@ -23,7 +23,7 @@ export default {
         blue: "#46bcff",
         "darker-blue": "#2c99d7",
         red: "#ff6464",
-        "dark-red": "#c82323",
+        "darker-red": "#c82323",
         black: "#000000",
         "near-black": "#2c2c2c",
         "darker-gray": "#3f4044",

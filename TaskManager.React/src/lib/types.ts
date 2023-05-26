@@ -5,6 +5,10 @@ export type StatusUpdateProps = {
   newStatus: Status;
 };
 
+export type TodoProp = {
+  todo: Todo
+}
+
 export type Todo = {
   id: number;
   title: string;
