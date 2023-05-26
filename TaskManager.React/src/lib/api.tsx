@@ -58,3 +58,30 @@ export async function deleteTodo(todoId: string) {
     return data;
   }
 }
+
+export async function createTodo(todo: Todo) {
+  const response = await fetch(`https://localhost:5001/api/ToDos/`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: todo.id,
+      title: todo.title,
+      description: todo.description,
+      duedate: todo.duedate,
+      notes: todo.notes,
+      status: todo.status,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to create todo");
+  }
+  if (response.status === 204) {
+    return { message: "Created successfully" };
+  } else {
+    const data: Todo = await response.json();
+    return data;
+  }
+}
