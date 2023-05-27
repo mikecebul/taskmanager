@@ -85,3 +85,30 @@ export async function createTodo(todo: Todo) {
     return data;
   }
 }
+
+export async function editTodo(todo: Todo) {
+  const response = await fetch(`https://localhost:5001/api/ToDos/${todo.id}`, {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      id: todo.id,
+      title: todo.title,
+      description: todo.description,
+      duedate: todo.duedate,
+      notes: todo.notes,
+      status: todo.status,
+    }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to update ToDO");
+  }
+  if (response.status === 204) {
+    return { message: "Created successfully" };
+  } else {
+    const data: Todo = await response.json();
+    return data;
+  }
+}
