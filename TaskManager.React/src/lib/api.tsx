@@ -1,4 +1,6 @@
 import type { Todo, StatusUpdateProps } from "./types";
+import { loadStripe } from "@stripe/stripe-js";
+const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 export async function getTodos(): Promise<Todo[]> {
   const response = await fetch("https://localhost:5001/api/ToDos");
@@ -110,5 +112,28 @@ export async function editTodo(todo: Todo) {
   } else {
     const data: Todo = await response.json();
     return data;
+  }
+}
+
+export async function stripeCheckout() {
+  const response = await fetch(
+    "https://localhost:5001/api/Stripe/create-checkout-session",
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
+  if (!response.ok) {
+    throw new Error("Failed to create Stripe checkout");
+  }
+  const data = await response.json();
+  const result = await stripe?.redirectToCheckout({
+    sessionId: data.id,
+  });
+
+  if (result?.error) {
+    console.error(result.error.message);
   }
 }

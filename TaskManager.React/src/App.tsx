@@ -1,5 +1,5 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CheckCheck } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "@/pages/Home";
@@ -7,13 +7,14 @@ import TodoDetails from "./pages/TodoDetails";
 import EditTodo from "./pages/EditTodo";
 import DeleteTodo from "./pages/DeleteTodo";
 import CreateTodo from "./pages/CreateTodo";
+import { stripeCheckout } from "./lib/api";
 
 const queryClient = new QueryClient();
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <ReactQueryDevtools initialIsOpen={false} />
+      {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <Router>
         <div className="flex flex-col min-h-screen">
           <Nav />
@@ -48,9 +49,20 @@ function Nav() {
   );
 }
 
+const handleCheckout = async () => {
+  try {
+    await stripeCheckout();
+  } catch (error) {
+    console.error(error);
+  }
+};
+
 function Footer() {
   return (
-    <footer className="flex justify-end px-2 py-4 bg-near-black">
+    <footer className="flex justify-between px-2 py-4 bg-near-black">
+      <button onClick={handleCheckout} className="text-xs text-medium-gray">
+        Buy me a coffee
+      </button>
       <p className="text-xs text-medium-gray">Privacy Policy</p>
     </footer>
   );
