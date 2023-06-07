@@ -29,7 +29,7 @@ function DeleteTodoPage() {
     return <div>An error has occurred: {(error as Error).message}</div>;
 
   return (
-    <main className="flex-1 px-4 pt-6">
+    <main className="max-w-2xl flex-1 px-4 pt-6 ">
       <h1 className="text-2xl font-bold tracking-wide">Delete To Do</h1>
       <TodoStatusIndicator status={todo.status} />
       <TodoGrid todo={todo} />
@@ -74,21 +74,27 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
     <>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Title</p>
-        <p className="col-span-3 text-xs font-medium">{todo.title}</p>
+        <p className="col-span-3 break-words text-xs font-medium">
+          {todo.title}
+        </p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Description</p>
-        <p className="col-span-23 text-xs font-medium">{todo.description}</p>
+        <p className="col-span-3 break-words text-xs font-medium">
+          {todo.description}
+        </p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Due Date</p>
-        <p className="col-span-3 text-xs font-medium">
+        <p className="col-span-3 break-words text-xs font-medium">
           {formatDate(todo.duedate)}
         </p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Notes</p>
-        <p className="col-span-3 text-xs font-medium">{todo.notes}</p>
+        <p className="col-span-3 break-words text-xs font-medium">
+          {todo.notes}
+        </p>
       </div>
     </>
   );

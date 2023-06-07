@@ -34,18 +34,20 @@ function App() {
 
 function Nav() {
   return (
-    <nav className="bg-teal">
-      <div className="flex items-center justify-between px-4 py-4">
-        <div className="flex items-center">
-          <CheckCheck className="stroke-[3px] text-white" />
-          <p className="text-xl font-medium text-white">
-            TaskManager
-            <span className="absolute text-xs font-thin">TM</span>
-          </p>
+    <div className="w-screen bg-teal">
+      <nav className=" 2xl:mx-auto 2xl:max-w-7xl">
+        <div className="flex items-center justify-between px-4 py-4 2xl:h-20">
+          <div className="flex items-center">
+            <CheckCheck className="stroke-[3px] text-white 2xl:stroke-[4px]" />
+            <p className="text-xl font-medium text-white 2xl:text-3xl 2xl:font-bold">
+              TaskManager
+              <span className="absolute text-xs font-thin">TM</span>
+            </p>
+          </div>
+          <p className="font-medium text-white">Welcome, John</p>
         </div>
-        <p className="font-medium text-white">Welcome, John</p>
-      </div>
-    </nav>
+      </nav>
+    </div>
   );
 }
 

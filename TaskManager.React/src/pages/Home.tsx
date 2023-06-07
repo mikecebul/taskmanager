@@ -1,6 +1,6 @@
 import { getTodos, updateStatus } from "@/lib/api";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import { Plus, ChevronRight } from "lucide-react";
+import { Plus, ChevronRight, Settings, Trash2 } from "lucide-react";
 import { Table, TableBody, TableCell, TableRow } from "@/components/ui/table";
 import {
   Select,
@@ -14,16 +14,17 @@ import { TableSkeleton } from "@/components/tableSkeleton";
 import { Link } from "react-router-dom";
 import type { Todo, Status, StatusUpdateProps } from "@/lib/types";
 import { useState } from "react";
+import { cn, formatDate } from "@/lib/utils";
 
 function Home() {
   return (
-    <main className="flex-1 px-4 pt-6">
+    <main className="flex-1 px-4 pt-6 2xl:mx-auto 2xl:max-w-7xl">
       <h1 className="text-2xl font-bold tracking-wide">To Dos</h1>
       <div className="pt-6 ">
         <Link
           to="/create"
           aria-label="Create new todo"
-          className="inline-flex items-center rounded-full hover:ring-offset-none group ring-offset-background hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 focus:hover:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
+          className="hover:ring-offset-none group inline-flex items-center rounded-full ring-offset-background hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 focus:hover:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
         >
           <div className="rounded-full border-[3px] border-blue text-xl text-blue group-hover:border-darker-blue">
             <Plus className="stroke-[3px] text-blue group-hover:text-darker-blue"></Plus>
@@ -70,7 +71,7 @@ function ToDoTable() {
   };
 
   return (
-    <div className="border border-white rounded-md shadow-lg">
+    <div className="rounded-md border border-white shadow-lg">
       <Table>
         <TableBody>
           {todos?.map((todo) => {
@@ -84,23 +85,60 @@ function ToDoTable() {
                 <TableCell className="px-2 py-2 text-base font-semibold text-darker-gray">
                   <Link
                     to={`/todos/${todo.id}`}
-                    className="inline-block w-full p-2 rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                    className="group inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
                   >
                     <div className="flex items-center justify-between">
-                      <div>
-                        <p className="w-40 overflow-hidden truncate">
-                          {todo.title}
+                      <div className="2xl:mr-16 2xl:flex 2xl:space-x-4">
+                        <p className="w-40 overflow-hidden truncate sm:w-[400px] md:w-[400px] 2xl:w-[700px]">
+                          {todo.title}{" "}
+                          <span className="hidden pl-2 text-sm font-light 2xl:inline">
+                            {todo.description}
+                          </span>
                         </p>
+                        <div className="flex w-40 space-x-4">
+                          <Link to={`/todos/${todo.id}`}>
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="20"
+                              height="20"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke-width="1.5"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              className="hidden rounded-full bg-teal stroke-white stroke-[2px] group-hover:2xl:block"
+                            >
+                              <circle cx="12" cy="12" r="10" stroke="none" />
+                              <path d="M12 16v-4" />
+                              <path d="M12 8h.01" />
+                            </svg>
+                          </Link>
+                          <Link to={`/todos/${todo.id}/edit`}>
+                            <Settings className="hidden text-medium-gray 2xl:group-hover:block" />
+                          </Link>
+                          <Link to={`/todos/${todo.id}/delete`}>
+                            <Trash2 className="hidden text-medium-gray 2xl:group-hover:block" />
+                          </Link>
+                        </div>
                       </div>
                       <div className="flex items-center justify-end">
                         <div
-                          className={`mr-1 h-3 w-3 rounded-full ${getDueDateColorClass(
-                            todo.duedate
-                          )}`}
+                          className={cn(
+                            "mr-1 h-3 w-3 rounded-full",
+                            getDueDateColorClass(todo.duedate)
+                          )}
                         ></div>
+                        <div className="hidden md:block md:w-28">
+                          <p className="px-2 text-xs font-thin">
+                            Due
+                            <span className="px-4 font-semibold">
+                              {formatDate(todo.duedate)}
+                            </span>
+                          </p>
+                        </div>
                         <ChevronRight
                           size={16}
-                          className="stroke-[3px] text-medium-gray"
+                          className="stroke-[3px] text-medium-gray 2xl:hidden"
                         />
                       </div>
                     </div>

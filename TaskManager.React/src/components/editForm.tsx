@@ -17,6 +17,7 @@ import { editTodo, getTodoById } from "@/lib/api";
 import { TableSkeleton } from "./tableSkeleton";
 import { useQuery } from "@tanstack/react-query";
 import StatusSelect from "./statusSelect";
+import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   status: z.union([
@@ -112,7 +113,7 @@ export function EditForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="Description" {...field} />
+                <Textarea placeholder="Description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -143,25 +144,22 @@ export function EditForm() {
             <FormItem>
               <FormLabel>Notes</FormLabel>
               <FormControl>
-                <Input placeholder="Notes" {...field} />
+                <Textarea placeholder="Notes" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <div className="flex items-center justify-end pt-12 space-x-8">
-          <Link
-            to={`/todos/${id}`}
-            className="flex items-center justify-center"
-          >
+        <div className="flex items-center justify-end space-x-8 pt-12">
+          <Link to={"/"} className="flex items-center justify-center">
             <p className="text-sm font-semibold tracking-wide text-blue hover:scale-105 hover:text-darker-blue">
               Cancel
             </p>
           </Link>
           <Button
             type="submit"
-            className="px-10 py-2 text-sm font-semibold tracking-wide text-white rounded-full shadow bg-blue ring-offset-background hover:scale-105 hover:bg-darker-blue hover:ring-offset-secondary-foreground focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+            className="rounded-full bg-blue px-10 py-2 text-sm font-semibold tracking-wide text-white shadow ring-offset-background hover:scale-105 hover:bg-darker-blue hover:ring-offset-secondary-foreground focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
           >
             Save
           </Button>

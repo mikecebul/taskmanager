@@ -14,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { Link, useNavigate } from "react-router-dom";
 import { DatePicker } from "./ui/datePicker";
 import { createTodo } from "@/lib/api";
+import { Textarea } from "./ui/textarea";
 
 const formSchema = z.object({
   title: z.string().min(2).max(50),
@@ -75,7 +76,7 @@ export function CreateForm() {
             <FormItem>
               <FormLabel>Description</FormLabel>
               <FormControl>
-                <Input placeholder="Description" {...field} />
+                <Textarea placeholder="Description" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
@@ -106,7 +107,7 @@ export function CreateForm() {
             <FormItem>
               <FormLabel>Notes</FormLabel>
               <FormControl>
-                <Input placeholder="Notes" {...field} />
+                <Textarea placeholder="Notes" {...field} />
               </FormControl>
               <FormMessage />
             </FormItem>
