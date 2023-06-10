@@ -11,3 +11,5 @@ TaskManager.Services/obj
 TaskManager.Tests/bin
 TaskManager.Tests/obj
 TaskManager.Web/bin
+TaskManager.Api/.env
+.env
