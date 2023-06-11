@@ -69,7 +69,7 @@ export async function deleteTodo(todoId: string) {
 }
 
 export async function createTodo(todo: Todo) {
-  const response = await fetch(`${API_URL}:5001/api/ToDos/`, {
+  const response = await fetch(`${API_URL}/api/ToDos/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -124,12 +124,15 @@ export async function editTodo(todo: Todo) {
 
 export async function stripeCheckout() {
   const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
-  const response = await fetch(`${API_URL}/api/Stripe/create-checkout-session`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
+  const response = await fetch(
+    `${API_URL}/api/Stripe/create-checkout-session`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }
+  );
   if (!response.ok) {
     throw new Error("Failed to create Stripe checkout");
   }
