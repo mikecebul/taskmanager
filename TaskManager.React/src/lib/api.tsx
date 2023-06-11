@@ -1,6 +1,5 @@
 import type { Todo, StatusUpdateProps } from "./types";
 import { loadStripe } from "@stripe/stripe-js";
-const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
 
 export async function getTodos(): Promise<Todo[]> {
   const response = await fetch("https://localhost:5001/api/ToDos");
@@ -116,6 +115,7 @@ export async function editTodo(todo: Todo) {
 }
 
 export async function stripeCheckout() {
+  const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
   const response = await fetch(
     "https://localhost:5001/api/Stripe/create-checkout-session",
     {
