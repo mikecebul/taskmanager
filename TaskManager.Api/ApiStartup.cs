@@ -44,7 +44,8 @@ namespace TaskManager.Api
         options.AddPolicy(name: "AllowSpecificOrigin",
                   builder =>
                   {
-                    builder.WithOrigins("http://127.0.0.1:5173", "https://salmon-desert-0086f8d10.3.azurestaticapps.net/")
+                    // builder.WithOrigins("http://127.0.0.1:5173", "https://salmon-desert-0086f8d10.3.azurestaticapps.net/")
+                    builder.AllowAnyHeader()
                               .AllowAnyHeader()
                               .AllowAnyMethod();
                   });
