@@ -32,7 +32,7 @@ function TodoDetailsPage() {
     return <div>An error has occurred: {(error as Error).message}</div>;
 
   return (
-    <main className="flex-1 max-w-2xl px-4 pt-6">
+    <main className="max-w-2xl flex-1 px-4 pt-6">
       <h1 className="text-2xl font-bold tracking-wide">To Do Details</h1>
       <TodoStatusIndicator status={todo.status} />
       <TodoGrid todo={todo} />
@@ -77,25 +77,25 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
     <>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Title</p>
-        <p className="col-span-3 text-xs font-medium break-words">
+        <p className="col-span-3 break-words text-xs font-medium">
           {todo.title}
         </p>
       </div>
-      <div className="grid grid-cols-4 pt-6 mr-8">
+      <div className="mr-8 grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Description</p>
-        <p className="col-span-3 text-xs font-medium break-words">
+        <p className="col-span-3 break-words text-xs font-medium">
           {todo.description}
         </p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Due Date</p>
-        <p className="col-span-3 text-xs font-medium break-words">
+        <p className="col-span-3 break-words text-xs font-medium">
           {formatDate(todo.duedate)}
         </p>
       </div>
       <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Notes</p>
-        <p className="col-span-3 text-xs font-medium break-words">
+        <p className="col-span-3 break-words text-xs font-medium">
           {todo.notes}
         </p>
       </div>
@@ -105,12 +105,12 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
 
 const Links = ({ id }: LinksProps) => {
   return (
-    <div className="flex items-center justify-between pt-12 space-x-0">
+    <div className="flex items-center justify-between space-x-0 pt-12">
       <Link
         to={`/todos/${id}/delete`}
         className="rounded-full focus:outline-none focus:ring-2 focus:ring-red hover:focus:scale-105 hover:focus:ring-darker-red"
       >
-        <p className="px-4 py-2 text-sm font-semibold tracking-wide rounded-full hover:ring-offset-none text-red ring-offset-background hover:scale-105 hover:text-darker-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+        <p className="hover:ring-offset-none rounded-full px-4 py-2 text-sm font-semibold tracking-wide text-red ring-offset-background hover:scale-105 hover:text-darker-red focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
           Delete
         </p>
       </Link>
@@ -119,13 +119,13 @@ const Links = ({ id }: LinksProps) => {
           to="/"
           className="rounded-full focus:outline-none focus:ring-2 focus:ring-blue hover:focus:scale-105 hover:focus:ring-darker-blue"
         >
-          <p className="px-4 py-2 text-sm font-semibold tracking-wide rounded-full hover:ring-offset-none text-blue ring-offset-background hover:scale-105 hover:text-darker-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
+          <p className="hover:ring-offset-none rounded-full px-4 py-2 text-sm font-semibold tracking-wide text-blue ring-offset-background hover:scale-105 hover:text-darker-blue focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50">
             Back to List
           </p>
         </Link>
         <Link
           to={`/todos/${id}/edit`}
-          className="px-10 py-2 text-xs font-medium rounded-full shadow hover:ring-offset-none bg-blue ring-offset-background hover:scale-105 hover:bg-darker-blue focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 hover:focus:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
+          className="hover:ring-offset-none rounded-full bg-blue px-10 py-2 text-xs font-medium shadow ring-offset-background hover:scale-105 hover:bg-darker-blue focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 hover:focus:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
         >
           <p className="text-sm font-semibold tracking-wide text-white">Edit</p>
         </Link>
