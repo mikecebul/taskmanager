@@ -55,7 +55,7 @@ namespace TaskManager.Api
     public void Configure(IApplicationBuilder app, IServiceProvider serviceProvider, IWebHostEnvironment env)
     {
       Services.ServicesStartup.Configure(serviceProvider);
-      StripeConfiguration.ApiKey = Configuration["STRIPE:SecretKey"];
+      StripeConfiguration.ApiKey = Configuration["STRIPE_SK"];
 
 
       if (env.IsDevelopment())
