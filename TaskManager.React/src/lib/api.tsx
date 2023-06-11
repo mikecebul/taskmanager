@@ -5,7 +5,7 @@ let API_URL: string;
 if (import.meta.env.MODE === "production") {
   API_URL =
     import.meta.env.URL ||
-    "https://taskmanager-mikecebul-api.azurewebsites.net/";
+    "https://taskmanager-mikecebul-api.azurewebsites.net";
 } else {
   API_URL = "https://localhost:5001";
 }
