@@ -5,7 +5,7 @@ let url: string;
 if (import.meta.env.MODE === "production") {
   url =
     import.meta.env.URL ||
-    "https://salmon-desert-0086f8d10.3.azurestaticapps.net/";
+    "https://salmon-desert-0086f8d10.3.azurestaticapps.net";
 } else {
   url = "https://localhost:5001";
 }
