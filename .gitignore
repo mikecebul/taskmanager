@@ -12,4 +12,5 @@ TaskManager.Tests/bin
 TaskManager.Tests/obj
 TaskManager.Web/bin
 TaskManager.Api/.env
+TaskManager.React/.env
 .env
