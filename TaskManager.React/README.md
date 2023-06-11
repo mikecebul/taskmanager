@@ -1,6 +1,6 @@
 # TaskManager Frontend - React + Vite
 
-This project is a single-page application built using React and Vite. It interacts with the ASP.NET Core API (TaskManger.API), which must be running for this application to function correctly.
+This project is a single-page application built using React and Vite. It interacts with the ASP.NET Core API (TaskManger.API), which must be running for this application to function correctly. I have a production ready envoronment hosted on Azure. View the app at https://salmon-desert-0086f8d10.3.azurestaticapps.net
 
 ## Features
 
@@ -64,6 +64,7 @@ Follow these steps to get the project running on your local machine:
 
    This command starts the Vite dev server. You should now be able to access the React application at `http://127.0.0.1:5173/`.
    <br>
+
 5. **Set up Environment Variable**
    Copy the contents of .env.example to a new file named .env:
    ```
