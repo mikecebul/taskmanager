@@ -1,8 +1,16 @@
 import type { Todo, StatusUpdateProps } from "./types";
 import { loadStripe } from "@stripe/stripe-js";
+let url: string;
 
+if (import.meta.env.MODE === "production") {
+  url =
+    import.meta.env.URL ||
+    "https://salmon-desert-0086f8d10.3.azurestaticapps.net/";
+} else {
+  url = "https://localhost:5001";
+}
 export async function getTodos(): Promise<Todo[]> {
-  const response = await fetch("https://localhost:5001/api/ToDos");
+  const response = await fetch(`${url}/api/ToDos`);
   if (!response.ok) {
     throw new Error("Failed to fetch todos");
   }
@@ -11,7 +19,7 @@ export async function getTodos(): Promise<Todo[]> {
 }
 
 export async function updateStatus({ todo, newStatus }: StatusUpdateProps) {
-  const response = await fetch(`https://localhost:5001/api/ToDos/${todo.id}`, {
+  const response = await fetch(`${url}/api/ToDos/${todo.id}`, {
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
@@ -27,7 +35,7 @@ export async function updateStatus({ todo, newStatus }: StatusUpdateProps) {
 }
 
 export async function getTodoById(todoId: string) {
-  const response = await fetch(`https://localhost:5001/api/ToDos/${todoId}`, {
+  const response = await fetch(`${url}/api/ToDos/${todoId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -42,7 +50,7 @@ export async function getTodoById(todoId: string) {
 }
 
 export async function deleteTodo(todoId: string) {
-  const response = await fetch(`https://localhost:5001/api/ToDos/${todoId}`, {
+  const response = await fetch(`${url}/api/ToDos/${todoId}`, {
     method: "DELETE",
     headers: {
       "Content-Type": "application/json",
@@ -61,7 +69,7 @@ export async function deleteTodo(todoId: string) {
 }
 
 export async function createTodo(todo: Todo) {
-  const response = await fetch(`https://localhost:5001/api/ToDos/`, {
+  const response = await fetch(`${url}:5001/api/ToDos/`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -88,7 +96,7 @@ export async function createTodo(todo: Todo) {
 }
 
 export async function editTodo(todo: Todo) {
-  const response = await fetch(`https://localhost:5001/api/ToDos/${todo.id}`, {
+  const response = await fetch(`${url}/api/ToDos/${todo.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",
@@ -116,15 +124,12 @@ export async function editTodo(todo: Todo) {
 
 export async function stripeCheckout() {
   const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
-  const response = await fetch(
-    "https://localhost:5001/api/Stripe/create-checkout-session",
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }
-  );
+  const response = await fetch(`${url}/api/Stripe/create-checkout-session`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+  });
   if (!response.ok) {
     throw new Error("Failed to create Stripe checkout");
   }
