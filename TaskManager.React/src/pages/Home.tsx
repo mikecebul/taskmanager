@@ -19,13 +19,13 @@ import { useMediaQuery } from "@mantine/hooks";
 
 function Home() {
   return (
-    <main className="flex-1 px-4 pt-6 2xl:mx-auto 2xl:max-w-7xl">
+    <div className="px-4 pt-6 2xl:mx-auto 2xl:max-w-7xl">
       <h1 className="text-2xl font-bold tracking-wide">To Dos</h1>
       <div className="pt-6 ">
         <Link
           to="/create"
           aria-label="Create new todo"
-          className="inline-flex items-center rounded-full hover:ring-offset-none group ring-offset-background hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 focus:hover:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
+          className="hover:ring-offset-none group inline-flex items-center rounded-full ring-offset-background hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 focus:hover:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
         >
           <div className="rounded-full border-[3px] border-blue text-xl text-blue group-hover:border-darker-blue">
             <Plus className="stroke-[3px] text-blue group-hover:text-darker-blue"></Plus>
@@ -36,7 +36,7 @@ function Home() {
       <div className="pt-12 text-lg font-semibold">
         <ToDoTable />
       </div>
-    </main>
+    </div>
   );
 }
 
@@ -75,7 +75,7 @@ function ToDoTable() {
   };
 
   return (
-    <div className="border border-white rounded-md shadow-lg">
+    <div className="rounded-md border border-white shadow-lg">
       <Table>
         <TableBody>
           {todos?.map((todo) => {
@@ -88,9 +88,9 @@ function ToDoTable() {
                 </TableCell>
                 <TableCell className="px-0 py-0 text-base font-semibold text-darker-gray">
                   {isLargeScreen ? (
-                    <div className="inline-block w-full p-2 rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2">
+                    <div className="group inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2">
                       <div className="flex">
-                        <div className="flex items-center mr-16 space-x-4">
+                        <div className="mr-16 flex items-center space-x-4">
                           <p className="w-[700px] overflow-hidden truncate p-2">
                             <Link
                               to={`/todos/${todo.id}`}
@@ -102,7 +102,7 @@ function ToDoTable() {
                               {todo.description}
                             </span>
                           </p>
-                          <div className="flex items-center w-40 space-x-4 ">
+                          <div className="flex w-40 items-center space-x-4 ">
                             <Link
                               onFocus={() => setIconFocused(true)}
                               onBlur={() => setIconFocused(false)}
@@ -170,7 +170,7 @@ function ToDoTable() {
                   ) : (
                     <Link
                       to={`/todos/${todo.id}`}
-                      className="inline-block w-full p-2 rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                      className="group inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
                     >
                       <div className="flex items-center justify-between">
                         <p className="w-40 overflow-hidden truncate sm:w-[400px] md:w-[400px]">

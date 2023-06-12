@@ -32,12 +32,12 @@ function TodoDetailsPage() {
     return <div>An error has occurred: {(error as Error).message}</div>;
 
   return (
-    <main className="max-w-2xl flex-1 px-4 pt-6">
+    <div className="max-w-2xl px-4 pt-6">
       <h1 className="text-2xl font-bold tracking-wide">To Do Details</h1>
       <TodoStatusIndicator status={todo.status} />
       <TodoGrid todo={todo} />
       <Links id={id} />
-    </main>
+    </div>
   );
 }
 

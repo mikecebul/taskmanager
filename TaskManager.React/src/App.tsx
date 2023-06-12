@@ -16,15 +16,17 @@ function App() {
     <QueryClientProvider client={queryClient}>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <Router>
-        <div className="flex flex-col min-h-screen">
+        <div className="flex min-h-screen flex-col">
           <Nav />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/todos/:id" element={<TodoDetails />} />
-            <Route path="/todos/:id/edit" element={<EditTodo />} />
-            <Route path="/todos/:id/delete" element={<DeleteTodo />} />
-            <Route path="/create" element={<CreateTodo />} />
-          </Routes>
+          <main className="flex-1">
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/todos/:id" element={<TodoDetails />} />
+              <Route path="/todos/:id/edit" element={<EditTodo />} />
+              <Route path="/todos/:id/delete" element={<DeleteTodo />} />
+              <Route path="/create" element={<CreateTodo />} />
+            </Routes>
+          </main>
           <Footer />
         </div>
       </Router>
@@ -61,7 +63,7 @@ const handleCheckout = async () => {
 
 function Footer() {
   return (
-    <footer className="flex justify-between px-2 py-4 bg-near-black">
+    <footer className="flex justify-between bg-near-black px-2 py-4">
       <button onClick={handleCheckout} className="text-xs text-medium-gray">
         Buy me a coffee
       </button>
