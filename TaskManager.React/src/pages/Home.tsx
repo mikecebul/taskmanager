@@ -42,7 +42,7 @@ function Home() {
 
 function ToDoTable() {
   const isLargeScreen = useMediaQuery("(min-width: 1536px)");
-  const [iconFocused, setIconFocused] = useState(false);
+  const [iconFocused, setIconFocused] = useState<number | null>(null);
 
   const {
     isLoading,
@@ -104,11 +104,11 @@ function ToDoTable() {
                           </p>
                           <div className="flex w-40 items-center space-x-4 ">
                             <Link
-                              onFocus={() => setIconFocused(true)}
-                              onBlur={() => setIconFocused(false)}
+                              onFocus={() => setIconFocused(todo.id)}
+                              onBlur={() => setIconFocused(null)}
                               to={`/todos/${todo.id}`}
                               className={`group-hover:block ${
-                                iconFocused ? "block" : "hidden"
+                                iconFocused === todo.id ? "block" : "hidden"
                               }`}
                             >
                               <svg
@@ -128,21 +128,21 @@ function ToDoTable() {
                               </svg>
                             </Link>
                             <Link
-                              onFocus={() => setIconFocused(true)}
-                              onBlur={() => setIconFocused(false)}
+                              onFocus={() => setIconFocused(todo.id)}
+                              onBlur={() => setIconFocused(null)}
                               to={`/todos/${todo.id}/edit`}
                               className={`group-hover:block ${
-                                iconFocused ? "block" : "hidden"
+                                iconFocused === todo.id ? "block" : "hidden"
                               }`}
                             >
                               <Settings className=" text-medium-gray" />
                             </Link>
                             <Link
-                              onFocus={() => setIconFocused(true)}
-                              onBlur={() => setIconFocused(false)}
+                              onFocus={() => setIconFocused(todo.id)}
+                              onBlur={() => setIconFocused(null)}
                               to={`/todos/${todo.id}/delete`}
                               className={`group-hover:block ${
-                                iconFocused ? "block" : "hidden"
+                                iconFocused === todo.id ? "block" : "hidden"
                               }`}
                             >
                               <Trash2 className=" text-medium-gray" />
