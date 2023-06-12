@@ -123,7 +123,9 @@ export async function editTodo(todo: Todo) {
 }
 
 export async function stripeCheckout() {
-  const stripe = await loadStripe(import.meta.env.VITE_STRIPE_PK);
+  const stripe = await loadStripe(
+    "pk_test_51HcupAI7fId8WMNyEyPymbdlt5kKRjKG3yfm2MeKVDv5NF3dCijqOFk8282tXOSBGvRKnKLPPVRErSQCA4ISAGtV00SczO8Ck6"
+  );
   const response = await fetch(
     `${API_URL}/api/Stripe/create-checkout-session`,
     {
