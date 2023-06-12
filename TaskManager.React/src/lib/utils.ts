@@ -9,10 +9,10 @@ export function formatDate(input: string | undefined | Date): string {
   if (input == undefined) return "TBD";
   if (input instanceof Date) {
     return input.toLocaleDateString("en-US", {
-    year: "numeric",
-    month: "2-digit",
-    day: "2-digit",
-  });
+      year: "numeric",
+      month: "2-digit",
+      day: "2-digit",
+    });
   }
   const date = new Date(input);
   return date.toLocaleDateString("en-US", {

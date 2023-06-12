@@ -15,6 +15,7 @@ import { Link } from "react-router-dom";
 import type { Todo, Status, StatusUpdateProps } from "@/lib/types";
 import { useState } from "react";
 import { cn, formatDate } from "@/lib/utils";
+import { useMediaQuery } from "@mantine/hooks";
 
 function Home() {
   return (
@@ -24,7 +25,7 @@ function Home() {
         <Link
           to="/create"
           aria-label="Create new todo"
-          className="hover:ring-offset-none group inline-flex items-center rounded-full ring-offset-background hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 focus:hover:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
+          className="inline-flex items-center rounded-full hover:ring-offset-none group ring-offset-background hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue focus:ring-offset-2 hover:focus:scale-105 focus:hover:ring-darker-blue disabled:cursor-not-allowed disabled:opacity-50"
         >
           <div className="rounded-full border-[3px] border-blue text-xl text-blue group-hover:border-darker-blue">
             <Plus className="stroke-[3px] text-blue group-hover:text-darker-blue"></Plus>
@@ -40,6 +41,9 @@ function Home() {
 }
 
 function ToDoTable() {
+  const isLargeScreen = useMediaQuery("(min-width: 1536px)");
+  const [iconFocused, setIconFocused] = useState(false);
+
   const {
     isLoading,
     error,
@@ -71,7 +75,7 @@ function ToDoTable() {
   };
 
   return (
-    <div className="rounded-md border border-white shadow-lg">
+    <div className="border border-white rounded-md shadow-lg">
       <Table>
         <TableBody>
           {todos?.map((todo) => {
@@ -82,67 +86,122 @@ function ToDoTable() {
                     <ProgressSelect todo={todo} />
                   </div>
                 </TableCell>
-                <TableCell className="px-2 py-2 text-base font-semibold text-darker-gray">
-                  <Link
-                    to={`/todos/${todo.id}`}
-                    className="group inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
-                  >
-                    <div className="flex items-center justify-between">
-                      <div className="2xl:mr-16 2xl:flex 2xl:space-x-4">
-                        <p className="w-40 overflow-hidden truncate sm:w-[400px] md:w-[400px] 2xl:w-[700px]">
+                <TableCell className="px-0 py-0 text-base font-semibold text-darker-gray">
+                  {isLargeScreen ? (
+                    <div className="inline-block w-full p-2 rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2">
+                      <div className="flex">
+                        <div className="flex items-center mr-16 space-x-4">
+                          <p className="w-[700px] overflow-hidden truncate p-2">
+                            <Link
+                              to={`/todos/${todo.id}`}
+                              className="rounded ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                            >
+                              {todo.title}{" "}
+                            </Link>
+                            <span className="inline pl-2 text-sm font-light">
+                              {todo.description}
+                            </span>
+                          </p>
+                          <div className="flex items-center w-40 space-x-4 ">
+                            <Link
+                              onFocus={() => setIconFocused(true)}
+                              onBlur={() => setIconFocused(false)}
+                              to={`/todos/${todo.id}`}
+                              className={`group-hover:block ${
+                                iconFocused ? "block" : "hidden"
+                              }`}
+                            >
+                              <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                width="20"
+                                height="20"
+                                viewBox="0 0 24 24"
+                                fill="none"
+                                strokeWidth="1.5"
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                className=" rounded-full bg-teal stroke-white stroke-[2px] group-hover:2xl:block"
+                              >
+                                <circle cx="12" cy="12" r="10" stroke="none" />
+                                <path d="M12 16v-4" />
+                                <path d="M12 8h.01" />
+                              </svg>
+                            </Link>
+                            <Link
+                              onFocus={() => setIconFocused(true)}
+                              onBlur={() => setIconFocused(false)}
+                              to={`/todos/${todo.id}/edit`}
+                              className={`group-hover:block ${
+                                iconFocused ? "block" : "hidden"
+                              }`}
+                            >
+                              <Settings className=" text-medium-gray" />
+                            </Link>
+                            <Link
+                              onFocus={() => setIconFocused(true)}
+                              onBlur={() => setIconFocused(false)}
+                              to={`/todos/${todo.id}/delete`}
+                              className={`group-hover:block ${
+                                iconFocused ? "block" : "hidden"
+                              }`}
+                            >
+                              <Trash2 className=" text-medium-gray" />
+                            </Link>
+                          </div>
+                        </div>
+                        <div className="flex items-center justify-end">
+                          <div
+                            className={cn(
+                              "mr-1 h-3 w-3 rounded-full",
+                              getDueDateColorClass(todo.duedate)
+                            )}
+                          ></div>
+                          <div className="w-28">
+                            <p className="px-2 text-xs font-thin">
+                              Due
+                              <span className="px-4 font-semibold">
+                                {formatDate(todo.duedate)}
+                              </span>
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  ) : (
+                    <Link
+                      to={`/todos/${todo.id}`}
+                      className="inline-block w-full p-2 rounded group ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
+                    >
+                      <div className="flex items-center justify-between">
+                        <p className="w-40 overflow-hidden truncate sm:w-[400px] md:w-[400px]">
                           {todo.title}{" "}
-                          <span className="hidden pl-2 text-sm font-light 2xl:inline">
+                          <span className="hidden pl-2 text-sm font-light">
                             {todo.description}
                           </span>
                         </p>
-                        <div className="flex w-40 space-x-4">
-                          <Link to={`/todos/${todo.id}`}>
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="20"
-                              height="20"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke-width="1.5"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              className="hidden rounded-full bg-teal stroke-white stroke-[2px] group-hover:2xl:block"
-                            >
-                              <circle cx="12" cy="12" r="10" stroke="none" />
-                              <path d="M12 16v-4" />
-                              <path d="M12 8h.01" />
-                            </svg>
-                          </Link>
-                          <Link to={`/todos/${todo.id}/edit`}>
-                            <Settings className="hidden text-medium-gray 2xl:group-hover:block" />
-                          </Link>
-                          <Link to={`/todos/${todo.id}/delete`}>
-                            <Trash2 className="hidden text-medium-gray 2xl:group-hover:block" />
-                          </Link>
+                        <div className="flex items-center justify-end">
+                          <div
+                            className={cn(
+                              "mr-1 h-3 w-3 rounded-full",
+                              getDueDateColorClass(todo.duedate)
+                            )}
+                          ></div>
+                          <div className="hidden md:block md:w-28">
+                            <p className="px-2 text-xs font-thin">
+                              Due
+                              <span className="px-4 font-semibold">
+                                {formatDate(todo.duedate)}
+                              </span>
+                            </p>
+                          </div>
+                          <ChevronRight
+                            size={16}
+                            className="stroke-[3px] text-medium-gray"
+                          />
                         </div>
                       </div>
-                      <div className="flex items-center justify-end">
-                        <div
-                          className={cn(
-                            "mr-1 h-3 w-3 rounded-full",
-                            getDueDateColorClass(todo.duedate)
-                          )}
-                        ></div>
-                        <div className="hidden md:block md:w-28">
-                          <p className="px-2 text-xs font-thin">
-                            Due
-                            <span className="px-4 font-semibold">
-                              {formatDate(todo.duedate)}
-                            </span>
-                          </p>
-                        </div>
-                        <ChevronRight
-                          size={16}
-                          className="stroke-[3px] text-medium-gray 2xl:hidden"
-                        />
-                      </div>
-                    </div>
-                  </Link>
+                    </Link>
+                  )}
                 </TableCell>
               </TableRow>
             );
