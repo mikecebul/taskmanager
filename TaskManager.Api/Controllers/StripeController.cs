@@ -12,8 +12,8 @@ namespace TaskManager.Api.Controllers
     public ActionResult Create()
     {
       var coffee = "price_1NCEovI7fId8WMNyQ6TRcT9v";
-      var domain = "http://127.0.0.1:5173";
-      var options = new SessionCreateOptions      
+      var domain = "https://salmon-desert-0086f8d10.3.azurestaticapps.net";
+      var options = new SessionCreateOptions
       {
         LineItems = new List<SessionLineItemOptions>
                 {
@@ -24,8 +24,8 @@ namespace TaskManager.Api.Controllers
                   },
                 },
         Mode = "payment",
-        SuccessUrl = domain + "?success=true",
-        CancelUrl = domain + "?canceled=true",
+        SuccessUrl = domain,
+        CancelUrl = domain,
       };
       var service = new SessionService();
       Session session = service.Create(options);
