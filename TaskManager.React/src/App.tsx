@@ -1,6 +1,6 @@
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-import { CheckCheck } from "lucide-react";
+import { CheckCheck, Coffee } from "lucide-react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import Home from "@/pages/Home";
 import TodoDetails from "./pages/TodoDetails";
@@ -63,11 +63,13 @@ const handleCheckout = async () => {
 
 function Footer() {
   return (
-    <footer className="flex justify-between bg-near-black px-2 py-4">
-      <button onClick={handleCheckout} className="text-xs text-medium-gray">
-        Buy me a coffee
-      </button>
-      <p className="text-xs text-medium-gray">Privacy Policy</p>
+    <footer className="bg-near-black px-2 py-4">
+      <div className="flex justify-between 2xl:mx-auto 2xl:max-w-7xl">
+        <button onClick={handleCheckout} className="text-xs text-medium-gray">
+          Buy me a <Coffee className="inline-block" size={18} />
+        </button>
+        <p className="text-xs text-medium-gray">Privacy Policy</p>
+      </div>
     </footer>
   );
 }
