@@ -81,7 +81,7 @@ const TodoGrid: FC<TodoProp> = ({ todo }) => {
           {todo.title}
         </p>
       </div>
-      <div className="mr-8 grid grid-cols-4 pt-6">
+      <div className="grid grid-cols-4 pt-6">
         <p className="col-span-1 text-xs font-semibold">Description</p>
         <p className="col-span-3 break-words text-xs font-medium">
           {todo.description}

@@ -86,8 +86,8 @@ function ToDoTable() {
                     <ProgressSelect todo={todo} />
                   </div>
                 </TableCell>
-                <TableCell className="px-0 py-0 text-base font-semibold text-darker-gray">
-                  {isLargeScreen ? (
+                {isLargeScreen ? (
+                  <TableCell className="p-0 text-base font-semibold text-darker-gray">
                     <div className="group inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2">
                       <div className="flex">
                         <div className="mr-16 flex items-center space-x-4">
@@ -167,7 +167,9 @@ function ToDoTable() {
                         </div>
                       </div>
                     </div>
-                  ) : (
+                  </TableCell>
+                ) : (
+                  <TableCell className="p-1 text-base font-semibold text-darker-gray">
                     <Link
                       to={`/todos/${todo.id}`}
                       className="group inline-block w-full rounded p-2 ring-offset-background focus:outline-none focus:ring-2 focus:ring-medium-gray focus:ring-offset-2"
@@ -201,8 +203,8 @@ function ToDoTable() {
                         </div>
                       </div>
                     </Link>
-                  )}
-                </TableCell>
+                  </TableCell>
+                )}
               </TableRow>
             );
           })}
