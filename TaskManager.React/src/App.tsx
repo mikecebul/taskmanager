@@ -16,7 +16,7 @@ function App() {
     <QueryClientProvider client={queryClient}>
       {/* <ReactQueryDevtools initialIsOpen={false} /> */}
       <Router>
-        <div className="flex min-h-[100dvh] flex-col">
+        <div className="h-my-screen flex flex-col">
           <Nav />
           <main className="flex-1">
             <Routes>
